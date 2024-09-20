@@ -52,7 +52,7 @@ const Footer: React.FC = () => {
           </svg>
         </a>
       </div>
-      <a href="/">&copy;2022 Ignite Channel Inc.</a>
+      <a href="/">&copy;2024 Ignite Channel Inc.</a>
       <div className="flex space-x-2">
         <Link href="/privacy">Privacy</Link>
         <Link href="/terms">Terms</Link>
