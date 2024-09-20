@@ -3,47 +3,75 @@
 @tailwind utilities;
 
 .navlink {
-  @apply hover:scale-110 opacity-50 hover:opacity-100 cursor-pointer;
+    @apply hover:scale-110 opacity-50 hover:opacity-100 cursor-pointer;
 }
 
 .activelink {
-  @apply opacity-100 cursor-default;
+    @apply opacity-100 cursor-default;
 }
 
 h1 {
-  @apply text-5xl;
+    @apply text-5xl;
 }
 
 h2 {
-  @apply text-2xl;
+    @apply text-2xl;
 }
 
 h3 {
-  @apply text-xl;
+    @apply text-xl;
 }
 
 h5 {
-  @apply text-lg;
+    @apply text-lg;
 }
 
 ul {
-  @apply space-y-2 px-3;
+    @apply space-y-2 px-3;
 }
 
 .videoWrapper {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
 }
 
 .videoWrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
+    font-family: 'Nunito', sans-serif;
+}
+
+#return-to-top {
+    display: none;
+    position: fixed;
+    bottom: 4.5rem;
+    right: 2rem;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: #ff986e;
+    color: white;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    text-transform: capitalize;
+}
+
+#return-to-top:hover {
+    background-color: #555;
+}
+
+#return-to-top svg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
