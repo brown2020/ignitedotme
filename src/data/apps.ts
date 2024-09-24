@@ -19,7 +19,7 @@ interface Screenshot {
 }
 
 // Define the type structure for each talk
-export interface Project {
+export interface Apps {
     id: string;
     source: StaticImageData;
     title: string;
@@ -33,7 +33,7 @@ export interface Project {
 }
 
 // Create the array of talks with the specified type
-export const projects: Project[] = [
+export const apps: Apps[] = [
     {
         id: "aidme-hearing",
         source: aidmeHearing,

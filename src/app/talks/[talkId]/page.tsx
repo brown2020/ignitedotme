@@ -21,7 +21,7 @@ const TalkDetails: NextPage = () => {
                 <div className="film-Details-title flex justify-center font-bold text-center py-8">
                     <h2 className="text-4xl font-bold border-title ">Talk</h2>
                 </div>
-                <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5 talk-details-contant">
+                <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5 p-2 talk-details-contant">
                     <div className="w-full">
                         <iframe
                             width="100%"

@@ -79,9 +79,9 @@ const Navbar: React.FC = () => {
             }, 100);
         }
     };
-    console.log(pathname)
+
     return (
-        <div id="header" className={`${isFixed ? 'fixed ' : ''} ${pathname === '/' ? 'bg-slate-900/10 text-white' : 'text-black header'} text-lg z-20 flex items-center justify-between h-16 p-2 `}>
+        <div id="header" className={`${isFixed ? 'fixed-header' : ''} ${pathname === '/' ? 'bg-slate-900/10 text-white' : 'text-black header '} text-lg z-20 flex items-center justify-between h-16 p-2 `}>
             <div className="flex justify-between container mx-auto">
                 <div>
                     <Link href="/">
@@ -98,11 +98,6 @@ const Navbar: React.FC = () => {
                 <div className="flex space-x-2 gap-5 navigation-bar header-options" id="menu-box">
                     <ul className="flex gap-x-11 items-center">
                         <li>
-                            <p className="font-bold nav-items relative cursor-pointer" onClick={() => scrollToSection('home')}>
-                                Home
-                            </p>
-                        </li>
-                        <li>
                             <p className="font-bold nav-items relative cursor-pointer" onClick={() => scrollToSection('film')}>
                                 Film
                             </p>
@@ -113,13 +108,13 @@ const Navbar: React.FC = () => {
                             </p>
                         </li>
                         <li>
-                            <p className="font-bold nav-items relative cursor-pointer" onClick={() => scrollToSection('open-source')}>
-                                Open Sources
+                            <p className="font-bold nav-items relative cursor-pointer" onClick={() => scrollToSection('apps')}>
+                                Apps
                             </p>
                         </li>
                         <li>
-                            <p className="font-bold nav-items relative cursor-pointer" onClick={() => scrollToSection('projects')}>
-                                Projects
+                            <p className="font-bold nav-items relative cursor-pointer" onClick={() => scrollToSection('openSource')}>
+                                Open Source
                             </p>
                         </li>
                         <li className={`${pathname !== '/' ? 'text-black' : 'text-white'} signup-btn capitalize cursor-pointer bg-transparent relative overflow-hidden`}>

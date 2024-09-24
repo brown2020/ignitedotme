@@ -6,7 +6,7 @@ import headerImage from "@/app/assets/ignite-header.jpeg";
 import { ChevronDown } from "lucide-react";
 import { ChevronUp } from "lucide-react";
 import Footer from "@/components/Footer";
-import Project from "./projects/page";
+import Apps from "./apps/page";
 import Talks from "./talks/page";
 import Film from "./film/page";
 import { useEffect, useState } from "react";
@@ -97,7 +97,7 @@ export default function Home() {
             <div className="mt-5 mb-2 pt-5 pb-2" id="film">
                 <div className="container mx-auto">
                     <h1 className="text-center font-mono text-4xl text-title relative text-black">Film</h1>
-                    <p className="text-center mt-5 pt-5 w-full max-w-md m-auto text-gray-500">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A dolores omnis provident quam reiciendis voluptatum.</p>
+                    <p className="text-center mt-5 pt-5 w-full max-w-md m-auto text-gray-500  p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A dolores omnis provident quam reiciendis voluptatum.</p>
                 </div>
             </div>
             <Film />
@@ -105,23 +105,23 @@ export default function Home() {
             {/* Talks section */}
             <div className="mt-5 mb-2 pt-5 pb-2" id="talks">
                 <h1 className="text-center font-mono text-title relative text-black">Talks</h1>
-                <p className="text-center mt-5 pt-5 w-full max-w-md m-auto text-gray-500">Lorem ipsum dolor sit amet, consectetur adipisicing elit.A dolores omnis provident quam reiciendis voluptatum.</p>
+                <p className="text-center mt-5 pt-5 w-full max-w-md m-auto text-gray-500 p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit.A dolores omnis provident quam reiciendis voluptatum.</p>
             </div>
             <Talks />
 
+            {/* Apps section */}
+            <div className="mt-5 mb-2 pt-5 pb-2" id="apps">
+                <h1 className="text-center font-mono text-title relative text-black">Apps</h1>
+                <p className="text-center mt-5 pt-5 w-full max-w-md m-auto text-gray-500 p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit.A dolores omnis provident quam reiciendis voluptatum.</p>
+            </div>
+            <Apps />
+
             {/* Open source section */}
-            <div className="mt-5 mb-2 pt-5 pb-2" id="open-source">
+            <div className="mt-5 mb-2 pt-5 pb-2" id="openSource">
                 <h1 className="text-center font-mono text-title relative text-black">Open sources</h1>
-                <p className="text-center mt-5 pt-5 w-full max-w-md m-auto text-gray-500">Lorem ipsum dolor sit amet, consectetur adipisicing elit.A dolores omnis provident quam reiciendis voluptatum.</p>
+                <p className="text-center mt-5 pt-5 w-full max-w-md m-auto text-gray-500 p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit.A dolores omnis provident quam reiciendis voluptatum.</p>
             </div>
             <OpenSources />
-
-            {/* Projects section */}
-            <div className="mt-5 mb-2 pt-5 pb-2" id="projects">
-                <h1 className="text-center font-mono text-title relative text-black">Projects</h1>
-                <p className="text-center mt-5 pt-5 w-full max-w-md m-auto text-gray-500">Lorem ipsum dolor sit amet, consectetur adipisicing elit.A dolores omnis provident quam reiciendis voluptatum.</p>
-            </div>
-            <Project />
 
             {/* Signup section */}
             <div

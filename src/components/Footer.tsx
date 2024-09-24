@@ -5,7 +5,7 @@ import CookieConsentWrapper from "./CookieConsentWrapper";
 const Footer: React.FC = () => {
     return (
         <footer className="flex flex-col items-center justify-center p-4 space-y-2 bg-transparent text-white">
-            <div className="footer-icon flex mb-2 space-x-4">
+            <div className="footer-icon flex mb-2 space-x-4" >
                 <a href="https://www.facebook.com/ignitechannel">
                     <i className="fa-brands fa-facebook-f"></i>
                 </a>

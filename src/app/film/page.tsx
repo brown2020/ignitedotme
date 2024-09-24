@@ -5,7 +5,7 @@ import React from "react";
 
 const Film: NextPage = () => {
     return (
-        <div className="flex flex-col mb-5 mt-5 pb-5 space-y-5 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 container mx-auto flims-section">
+        <div className="flex flex-col mb-5 mt-5 pb-5 space-y-5 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 p-2 container mx-auto flims-section">
             {films.map((film) => (
                 <Vimeo
                     key={film.id}
