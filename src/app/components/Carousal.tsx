@@ -1,7 +1,7 @@
 "use client";
 
-import Image, { StaticImageData } from 'next/image';
-import React, { useState } from 'react';
+import Image, { StaticImageData } from "next/image";
+import React, { useState } from "react";
 
 interface slideArr {
     src: StaticImageData,
@@ -33,7 +33,7 @@ const Carousel: React.FC<Props> = ({
         <div id="default-carousel" className="relative w-full border border-solid border-gray-300 border-1 p-4" data-carousel="slide">
             <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
                 {slides.map((slide, index) => (
-                    <div key={index} className={`absolute w-full transition-opacity duration-700 ease-in-out ${currentSlide === index ? 'opacity-100' : 'opacity-0'}`} data-carousel-item>
+                    <div key={index} className={`absolute w-full transition-opacity duration-700 ease-in-out ${currentSlide === index ? "opacity-100" : "opacity-0"}`} data-carousel-item>
                         <Image src={slide.src} className="block w-full h-full object-cover image-section" alt={slide.alt} />
                     </div>
                 ))}
@@ -46,7 +46,7 @@ const Carousel: React.FC<Props> = ({
                             <button
                                 key={index}
                                 type="button"
-                                className={`w-3 h-3 rounded-full ${currentSlide === index ? 'bg-white border border-solid border-gray-800 border-2' : 'bg-gray-400'}`}
+                                className={`w-3 h-3 rounded-full ${currentSlide === index ? "bg-white border border-solid border-gray-800 border-2" : "bg-gray-400"}`}
                                 onClick={() => goToSlide(index)}
                                 aria-label={`Slide ${index + 1}`}
                             ></button>

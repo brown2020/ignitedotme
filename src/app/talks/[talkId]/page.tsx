@@ -3,6 +3,7 @@
 import Footer from "@/components/Footer";
 import { talks } from "@/data/talks";
 import { NextPage } from "next";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import React from "react";
 
@@ -35,12 +36,12 @@ const TalkDetails: NextPage = () => {
                     </div>
                     <div className="details py-0">
                         <div className="mb-3 pb-2 flex justify-between  p-2">
-                            <a href={talk.link}>
-                                <h1 className="text-start font-mono text-4xl text-title relative text-black text-sm">{talk.title}</h1>
-                            </a>
+                            <Link href={talk.link}>
+                                <h1 className="text-start font-mono text-2xl relative text-black title-text">{talk.title}</h1>
+                            </Link>
                         </div>
                         <h5 className="italic text-justify p-2 text-black">{talk.subtitle}</h5>
-                        <p className="text-justify  p-2 text-gray-500   ">{talk.text}</p>
+                        <p className="p-2 text-gray-500 whitespace-pre-wrap">{talk.text}</p>
                     </div>
                 </div>
             </div>

@@ -2,11 +2,11 @@ import Navbar from "../components/Navbar";
 import "./globals.css";
 import "../components/components.css";
 import { Metadata } from "next";
-import { Nunito } from 'next/font/google';
+import { Nunito } from "next/font/google";
 
 const nunito = Nunito({
-    subsets: ['latin'],
-    weight: ['300', '400', '700'],
+    subsets: ["latin"],
+    weight: ["300", "400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -23,6 +23,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <head>
+                <title>Ignite</title>
                 <link
                     rel="stylesheet"
                     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"

@@ -6,7 +6,7 @@ import { openSources } from "@/data/openSource";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import React from 'react';
+import React from "react";
 
 const OpenSourceDetails: React.FC = () => {
     const { openSourceId } = useParams();
@@ -25,7 +25,7 @@ const OpenSourceDetails: React.FC = () => {
                         <h2 className="text-4xl font-bold border-title">Open Sources</h2>
                     </div>
                     <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 p-2 open-sources-contant">
-                        <div className="w-full">
+                        <div className="w-full flex flex-col items-center justify-center">
                             {
                                 openSource.screenshots?.length > 0 ?
                                     <Carousel slides={openSource.screenshots} /> :
@@ -34,7 +34,7 @@ const OpenSourceDetails: React.FC = () => {
                         </div>
                         <div className="details py-0">
                             <div className="mb-3 pb-2 flex justify-between  items-center pl-2">
-                                <h1 className="text-start font-mono text-4xl text-title relative text-black text-sm ">{openSource.title}</h1>
+                                <h1 className="text-start font-mono text-2xl relative text-black title-text">{openSource.title}</h1>
                                 <div className="mr-2 flex gap-3 items-center">
                                     <div className="footer-icon_second flex space-x-2">
                                         {
@@ -53,7 +53,7 @@ const OpenSourceDetails: React.FC = () => {
                                 </div>
                             </div>
                             <h5 className="italic text-justify p-2 text-black">{openSource.subtitle}</h5>
-                            <p className="text-justify p-2 text-gray-500"> {openSource.text}</p>
+                            <p className="p-2 text-gray-500 whitespace-pre-wrap"> {openSource.text}</p>
                         </div>
                     </div>
                 </div>

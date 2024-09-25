@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
                     <i className="fa-brands fa-youtube"></i>
                 </a>
             </div>
-            <a href="/">&copy;2022 Ignite Channel Inc.</a>
+            <Link href="/">&copy;2022 Ignite Channel Inc.</Link>
             <div className="flex space-x-2">
                 <Link href="/privacy">Privacy</Link>
                 <Link href="/terms">Terms</Link>
