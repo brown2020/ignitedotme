@@ -22,7 +22,7 @@ const OpenSourceDetails: React.FC = () => {
             <div>
                 <div className="container mx-auto text-black main-container">
                     <div className="film-Details-title flex justify-center font-bold text-center py-8">
-                        <h2 className="text-4xl font-bold border-title">Open Sources</h2>
+                        <h2 className="text-4xl font-bold border-title capitalize">Open Source</h2>
                     </div>
                     <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 p-2 open-sources-contant">
                         <div className="w-full flex flex-col items-center justify-center">
@@ -52,7 +52,7 @@ const OpenSourceDetails: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-                            <h5 className="italic text-justify p-2 text-black">{openSource.subtitle}</h5>
+                            <h5 className="italic text-left p-2 text-black">{openSource.subtitle}</h5>
                             <p className="p-2 text-gray-500 whitespace-pre-wrap"> {openSource.text}</p>
                         </div>
                     </div>

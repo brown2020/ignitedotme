@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import headerImage from "@/app/assets/ignite-header.jpeg";
 import { ChevronDown, ChevronUp } from "lucide-react";
@@ -55,6 +54,25 @@ export default function Home() {
         window.location.href = mailtoLink;
     };
 
+    const scrollToSection = (id: string) => {
+        const header = document.getElementById("header");
+        const element = document.getElementById(id);
+        const headerOffset = 64; // Height of your sticky header
+        if (element) {
+            const elementPosition = element.getBoundingClientRect().top;
+
+            let offsetTop = 0;
+            if (header) offsetTop = header.offsetTop;
+
+            const offsetPosition = window.scrollY > offsetTop ? elementPosition + window.scrollY - headerOffset : elementPosition - headerOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
+        }
+    };
+
     return (
         <div className="flex flex-col flex-1 w-full" id="home">
             {/* Header image */}
@@ -72,53 +90,55 @@ export default function Home() {
                         <p className="mx-5 text-center">
                             Ignite Channel produces and distributes innovative documentary
                             films and media technology.{" "}
-                            <Link href="/#spark">
-                                <span className="underline cursor-pointer">Check out</span>
-                            </Link>{" "}
+                            <span className="underline cursor-pointer" onClick={() => scrollToSection("film")}>Check out</span>
+                            {" "}
                             our recent work.{" "}
-                            <Link href="/#signup">
-                                <span className="underline cursor-pointer">Sign up</span>
-                            </Link>{" "}
+                            <span className="underline cursor-pointer" onClick={() => scrollToSection("sign-up")}>Sign up</span>
+                            {" "}
                             to get notified about upcoming film productions and events.
                         </p>
                     </div>
 
                     {/* Chevron Down icon centered */}
-                    <Link href="/#spark">
-                        <div className="flex items-center justify-center w-full mt-auto mb-3 cursor-pointer">
+                    <div>
+                        <div className="flex items-center justify-center w-full mt-auto mb-3 cursor-pointer" onClick={() => scrollToSection("film")}>
                             <ChevronDown size={32} />
                         </div>
-                    </Link>
+                    </div>
                 </div>
             </div>
 
             {/* Film section */}
             <div className="mt-5 mb-2 pt-5 pb-2" id="film">
                 <div className="container mx-auto">
-                    <h1 className="text-center font-mono text-4xl text-title relative text-black">Film</h1>
-                    <p className="text-center mt-5 pt-5 w-full max-w-lg m-auto text-gray-500  p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A dolores omnis provident quam reiciendis voluptatum.</p>
+                    <h1 className="text-center font-mono text-4xl text-title relative text-black capitalize">Film</h1>
+                    <p className="text-center mt-5 pt-5 w-full max-w-lg m-auto text-gray-500  p-2">Exploring the human experience through documentary features on art,
+                        culture, science, and society.</p>
                 </div>
             </div>
             <Film />
 
             {/* Talks section */}
             <div className="mt-5 mb-2 pt-5 pb-2" id="talks">
-                <h1 className="text-center font-mono text-title relative text-black">Talks</h1>
-                <p className="text-center mt-5 pt-5 w-full max-w-lg m-auto text-gray-500 p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit.A dolores omnis provident quam reiciendis voluptatum.</p>
+                <h1 className="text-center font-mono text-title relative text-black capitalize">Talks</h1>
+                <p className="text-center mt-5 pt-5 w-full max-w-lg m-auto text-gray-500 p-2">Inspiring ideas on technology, AI, and film: Keynotes and TEDx talks
+                    that spark innovation.</p>
             </div>
             <Talks />
 
             {/* Apps section */}
             <div className="mt-5 mb-2 pt-5 pb-2" id="apps">
-                <h1 className="text-center font-mono text-title relative text-black">Apps</h1>
-                <p className="text-center mt-5 pt-5 w-full max-w-lg m-auto text-gray-500 p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit.A dolores omnis provident quam reiciendis voluptatum.</p>
+                <h1 className="text-center font-mono text-title relative text-black capitalize">Apps</h1>
+                <p className="text-center mt-5 pt-5 w-full max-w-lg m-auto text-gray-500 p-2">Discover apps from self-development to augmented reality, designed to
+                    enhance your experience.</p>
             </div>
             <Apps />
 
             {/* Open source section */}
             <div className="mt-5 mb-2 pt-5 pb-2" id="openSource">
-                <h1 className="text-center font-mono text-title relative text-black">Open sources</h1>
-                <p className="text-center mt-5 pt-5 w-full max-w-lg m-auto text-gray-500 p-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit.A dolores omnis provident quam reiciendis voluptatum.</p>
+                <h1 className="text-center font-mono text-title relative text-black capitalize">Open Source</h1>
+                <p className="text-center mt-5 pt-5 w-full max-w-lg m-auto text-gray-500 p-2">Empowering creativity through collaboration: Explore, contribute, and
+                    innovate with our open-source projects.</p>
             </div>
             <OpenSources />
 

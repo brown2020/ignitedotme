@@ -29,9 +29,12 @@ export const openSources: OpenSources[] = [
         webLink: "https://generate.me/",
         next: "#purpose-finder",
         text: `Generate.me is an open-source AI-powered application that allows users to create custom images based on text prompts and explore different artistic styles. It integrates with several services, including OpenAI and Fireworks API, and uses Firebase for backend management. The application offers options for users to either provide their own API keys or purchase credits to generate images.
-        Key features include image generation, profile management, and real-time updates using Firestore. Users can manage their profile details, track API usage, and buy credits for extended functionality. The app also includes Firebase authentication for secure access and supports dynamic screen adjustments for responsive design.
-        Built with Next.js 14, React, TypeScript, and Zustand for state management, Generate.me provides a seamless experience for image generation with features like error handling, notifications, and synchronization of local and remote states.
-        This project is actively being developed, and contributions are welcome through GitHub.`,
+
+Key features include image generation, profile management, and real-time updates using Firestore. Users can manage their profile details, track API usage, and buy credits for extended functionality. The app also includes Firebase authentication for secure access and supports dynamic screen adjustments for responsive design.
+
+Built with Next.js 14, React, TypeScript, and Zustand for state management, Generate.me provides a seamless experience for image generation with features like error handling, notifications, and synchronization of local and remote states.
+
+This project is actively being developed, and contributions are welcome through GitHub.`,
     },
     // {
     //     id: "purpose-finder",

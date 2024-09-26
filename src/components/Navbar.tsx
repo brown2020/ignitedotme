@@ -78,6 +78,11 @@ const Navbar: React.FC = () => {
                 }
             }, 100);
         }
+        const menuBox = document.getElementById("menu-box");
+        const menuIcon = document.getElementById("menu-icon");
+
+        menuBox?.classList.toggle("active");
+        menuIcon?.classList.toggle("active");
     };
 
     return (
@@ -128,7 +133,7 @@ const Navbar: React.FC = () => {
 
             <div className="responsive-menu ms-3 mx-3" onClick={addactiveclass}>
                 <div className="header-menu-icon d-flex align-items-center justify-content-center">
-                    <div className="menu-togle-new-class cursor-pointer" id="menu-icon">
+                    <div className="menu-togle-new-class cursor-pointer p-2" id="menu-icon">
                         <span className="line"></span>
                         <span className="line"></span>
                         <span className="line"></span>

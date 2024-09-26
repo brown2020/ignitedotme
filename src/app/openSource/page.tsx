@@ -14,7 +14,7 @@ const OpenSources: React.FC = () => {
                     <div className="flex flex-col max-w-2xl px-2 mx-auto my-4  text-center mx-sm-5 py-2">
                         <div className="flex justify-between items-center">
                             <Link href={`openSource/${openSource.id}`}>
-                                <h2 className="text-justify p-2 text-orange-400">{openSource.title}</h2>
+                                <h2 className="text-left p-2 text-orange-400">{openSource.title}</h2>
                             </Link>
                             <div className="footer-icon_second flex space-x-2 p-2">
                                 {
@@ -32,10 +32,10 @@ const OpenSources: React.FC = () => {
                             </div>
                         </div>
                         <Link href={`openSource/${openSource.id}`}>
-                            <h5 className="italic text-justify p-2 text-black">{openSource.subtitle}</h5>
+                            <h5 className="italic text-left p-2 text-black">{openSource.subtitle}</h5>
                             {/* Render text string */}
                             <p className="text-left  p-2 text-gray-500 whitespace-pre-wrap">
-                                {openSource.text?.slice(0, 150)}
+                                {openSource.text?.slice(0, 150)}...
                                 <span className="ml-2 text-lg text-orange-400 underline cursor-pointer">View More</span>
                             </p>
                         </Link>

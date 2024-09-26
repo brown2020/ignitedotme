@@ -20,7 +20,7 @@ const FilmDetails: NextPage = () => {
         <div>
             <div className="container mx-auto text-black main-container" style={{ minHeight: "768px" }}>
                 <div className="film-Details-title flex justify-center font-bold text-center py-8 mb-2">
-                    <h2 className="text-4xl font-bold border-title ">Film</h2>
+                    <h2 className="text-4xl font-bold border-title capitalize">Film</h2>
                 </div>
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 p-2 film-details-contant">
                     <div className="w-full">
@@ -40,7 +40,7 @@ const FilmDetails: NextPage = () => {
                                 <h1 className="text-start font-mono text-2xl relative text-black title-text">{film.title}</h1>
                             </Link>
                         </div>
-                        <h5 className="italic text-justify p-2 text-black">{film.subtitle}</h5>
+                        <h5 className="italic text-left p-2 text-black">{film.subtitle}</h5>
                         <p className="p-2 text-gray-500 whitespace-pre-wrap">{film.text}</p>
                     </div>
                 </div>
