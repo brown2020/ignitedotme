@@ -125,11 +125,11 @@ Download Purpose Finder now and start your journey towards a life filled with pa
         subtitle: "Explore the Sneakertopia Museum and Celebrate Sneaker Culture",
         screenshots: [
             {
-                src: SneakertopiaMuseum5,
+                src: SneakertopiaMuseum1,
                 alt: "1"
             },
             {
-                src: SneakertopiaMuseum4,
+                src: SneakertopiaMuseum2,
                 alt: "2"
             },
             {
@@ -137,11 +137,11 @@ Download Purpose Finder now and start your journey towards a life filled with pa
                 alt: "3"
             },
             {
-                src: SneakertopiaMuseum2,
+                src: SneakertopiaMuseum4,
                 alt: "4"
             },
             {
-                src: SneakertopiaMuseum1,
+                src: SneakertopiaMuseum5,
                 alt: "5"
             }
         ],
