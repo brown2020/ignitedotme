@@ -21,10 +21,10 @@ const AppsDetails: React.FC = () => {
         <div className="flex flex-col  space-y-5">
             <div>
                 <div className="container mx-auto text-black main-container">
-                    <div className="film-Details-title flex justify-center font-bold text-center py-8">
-                        <h2 className="text-4xl font-bold border-title capitalize ">App</h2>
+                    <div className="film-Details-title flex justify-center font-bold text-center py-8 wow animate__animated animate__fadeInDown">
+                        <h2 className="text-4xl font-bold border-title capitalize text-white main-text-tital">App</h2>
                     </div>
-                    <div className="flex flex-col xl:flex-row gap-5 p-2 app-details-contant">
+                    <div className="flex flex-col xl:flex-row gap-5 p-2 app-details-contant wow animate__animated animate__fadeInUp">
                         <div className="w-full xl:w-1/3">
                             {
                                 app.screenshots?.length > 0 ?
@@ -33,27 +33,27 @@ const AppsDetails: React.FC = () => {
                             }
                         </div>
                         <div className="details py-0 xl:w-2/3 ">
-                            <div className="mb-3 pb-2 flex justify-between  items-center pl-2">
-                                <h1 className="text-start font-mono text-2xl relative text-black title-text">{app.title}</h1>
+                            <div className="mb-1 pb-2 flex justify-between  items-center pl-2">
+                                <h2 className="text-start relative">{app.title}</h2>
                                 <div className="mr-2 flex gap-3 items-center">
                                     <div className="footer-icon_second flex space-x-2">
                                         {
                                             app.webLink !== "" &&
                                             <Link href={app.webLink} target="_blank">
-                                                <i className="fa-solid text-black fa-globe"></i>
+                                                <i className="fa-solid text-white fa-globe"></i>
                                             </Link>
                                         }
                                         {
                                             app.iosLink !== "" &&
                                             <Link href={app.iosLink} target="_blank">
-                                                <i className="fa-brands text-black fa-apple"></i>
+                                                <i className="fa-brands text-white fa-apple"></i>
                                             </Link>
                                         }
                                     </div>
                                 </div>
                             </div>
-                            <h5 className="italic text-left p-2 text-black">{app.subtitle}</h5>
-                            <p className="p-2 text-gray-500 whitespace-pre-wrap">{app.text}</p>
+                            <h5 className="text-left p-2 text-white">{app.subtitle}</h5>
+                            <p className="p-2 text-white whitespace-pre-wrap">{app.text}</p>
                         </div>
                     </div>
                 </div>

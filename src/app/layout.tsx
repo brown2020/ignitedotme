@@ -1,7 +1,11 @@
 import Navbar from "../components/Navbar";
+import 'animate.css';
 import "./globals.css";
 import "../components/components.css";
 import { Metadata } from "next";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
 import { Nunito } from "next/font/google";
 
 const nunito = Nunito({
@@ -28,10 +32,12 @@ export default function RootLayout({
                     rel="stylesheet"
                     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
                 />
+                <link href='https://fonts.googleapis.com/css?family=Zain' rel='stylesheet'></link>
+                <link href='https://fonts.googleapis.com/css?family=Anek Latin' rel='stylesheet'></link>
             </head>
             <body className={`${nunito.className} flex flex-col min-h-screen w-full text-slate-50`}>
                 <Navbar />
-                <div className="flex-1">{children}</div>
+                <div className="flex-1 master-contant">{children}</div>
             </body>
         </html>
     );

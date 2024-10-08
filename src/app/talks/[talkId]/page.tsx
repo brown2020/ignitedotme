@@ -20,7 +20,7 @@ const TalkDetails: NextPage = () => {
         <div>
             <div className="container mx-auto text-black main-container">
                 <div className="film-Details-title flex justify-center font-bold text-center py-8">
-                    <h2 className="text-4xl font-bold border-title capitalize">Talk</h2>
+                    <h2 className="text-4xl font-bold border-title capitalize text-white main-text-tital">Talk</h2>
                 </div>
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5 p-2 talk-details-contant">
                     <div className="w-full">
@@ -35,13 +35,13 @@ const TalkDetails: NextPage = () => {
                         ></iframe>
                     </div>
                     <div className="details py-0">
-                        <div className="mb-3 pb-2 flex justify-between  p-2">
+                        <div className="mb-2 pb-2 flex justify-between  p-2">
                             <Link href={talk.link}>
-                                <h1 className="text-start font-mono text-2xl relative text-black title-text">{talk.title}</h1>
+                                <h2 className="text-start relative">{talk.title}</h2>
                             </Link>
                         </div>
-                        <h5 className="italic text-left p-2 text-black">{talk.subtitle}</h5>
-                        <p className="p-2 text-gray-500 whitespace-pre-wrap">{talk.text}</p>
+                        <h5 className="text-left p-2 text-white">{talk.subtitle}</h5>
+                        <p className="p-2 text-white whitespace-pre-wrap">{talk.text}</p>
                     </div>
                 </div>
             </div>

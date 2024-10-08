@@ -5,9 +5,9 @@ import React from "react";
 
 const Apps: React.FC = () => {
     return (
-        <div className="mb-5 space-y-5 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 p-2 container mx-auto talks-section">
+        <div className="mb-5 space-y-5 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 p-2 container mx-auto talks-section  wow animate__animated animate__fadeInLeft">
             {apps.map((app) => (
-                <div className="flex flex-col space-y-3 first-of-type:mt-5 border border-slate-100 video-grid-section" id={app.id} key={app.id}>
+                <div className="flex flex-col space-y-3 first-of-type:mt-5 rounded-md video-grid-section bg-[#14151B]" id={app.id} key={app.id}>
                     <div className="apps-img mt-0">
                         <Image src={app.source} alt={app.title} />
                     </div>
@@ -20,22 +20,22 @@ const Apps: React.FC = () => {
                                 {
                                     app.webLink !== "" &&
                                     <Link href={app.webLink} target="_blank">
-                                        <i className="fa-solid text-black fa-globe"></i>
+                                        <i className="fa-solid text-white fa-globe"></i>
                                     </Link>
                                 }
                                 {
                                     app.iosLink !== "" &&
                                     <Link href={app.iosLink} target="_blank">
-                                        <i className="fa-brands text-black fa-apple"></i>
+                                        <i className="fa-brands text-white fa-apple"></i>
                                     </Link>
                                 }
                             </div>
                         </div>
                         <Link href={`apps/${app.id}`}>
-                            <h5 className="italic text-left p-2 text-black">{app.subtitle}</h5>
+                            <h5 className=" text-left p-2 text-white">{app.subtitle}</h5>
                             {/* Render text string */}
-                            <p className="text-left p-2 text-gray-500 whitespace-pre-wrap">{app.text?.slice(0, 150)}...
-                                <span className="ml-2 text-lg text-orange-400 underline cursor-pointer">View More</span>
+                            <p className="text-left p-2 text-white whitespace-pre-wrap">{app.text?.slice(0, 150)}...
+                                <span className="ml-2 text-lg text-orange-400 underline cursor-pointer view-more-section"><strong className="box-overlay">View More</strong></span>
                             </p>
                         </Link>
                     </div>

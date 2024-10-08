@@ -30,6 +30,8 @@ ul {
     @apply space-y-2 px-3;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
+
 .videoWrapper {
     position: relative;
     padding-bottom: 56.25%;
@@ -46,18 +48,42 @@ ul {
 
 html {
     scroll-behavior: smooth;
-    font-family: "Nunito", sans-serif;
+}
+
+body {
+    font-family: 'Anek Latin' !important;
+}
+
+h1,
+h2 {
+    font-family: 'Zain';
+    font-weight: 900;
+}
+
+h2 {
+    font-size: 30px;
+    color: #F5A425;
+}
+
+h5,
+p {
+    font-family: 'Anek Latin';
+    font-size: 20px;
+}
+
+input {
+    font-family: 'Anek Latin';
 }
 
 #return-to-top {
     display: none;
     position: fixed;
-    bottom: 4.5rem;
+    bottom: 2.5rem;
     right: 2rem;
     z-index: 99;
     border: none;
     outline: none;
-    background-color: #ff986e;
+    background-color: #0d6285;
     color: white;
     cursor: pointer;
     border-radius: 50%;
@@ -74,4 +100,38 @@ html {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.footer_bg_img {
+    position: relative;
+}
+
+.footer_bg_img::before {
+    position: absolute;
+    content: '';
+    inset: 0;
+    background: #020205;
+    opacity: 0.7;
+    z-index: 0;
+}
+
+.hero_title {
+    color: #F5A425;
+    font-size: 12rem;
+}
+
+.hero_details {
+    font-size: 2.4rem;
+}
+
+@media screen and (max-width: 580px) {
+    .hero_title {
+        font-size: 3.5rem;
+    }
+
+    .hero_details {
+        font-size: 1.5rem;
+        max-width: 70%;
+        margin: auto;
+    }
 }

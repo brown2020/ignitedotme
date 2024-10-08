@@ -22,7 +22,7 @@ const OpenSourceDetails: React.FC = () => {
             <div>
                 <div className="container mx-auto text-black main-container">
                     <div className="film-Details-title flex justify-center font-bold text-center py-8">
-                        <h2 className="text-4xl font-bold border-title capitalize">Open Source</h2>
+                        <h2 className="text-4xl font-bold border-title capitalize text-white  main-text-tital">Open Source</h2>
                     </div>
                     <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 p-2 open-sources-contant">
                         <div className="w-full flex flex-col items-center justify-center">
@@ -33,27 +33,27 @@ const OpenSourceDetails: React.FC = () => {
                             }
                         </div>
                         <div className="details py-0">
-                            <div className="mb-3 pb-2 flex justify-between  items-center pl-2">
-                                <h1 className="text-start font-mono text-2xl relative text-black title-text">{openSource.title}</h1>
+                            <div className="mb-1 pb-2 flex justify-between  items-center pl-2">
+                                <h2 className="text-start relative">{openSource.title}</h2>
                                 <div className="mr-2 flex gap-3 items-center">
                                     <div className="footer-icon_second flex space-x-2">
                                         {
                                             openSource.webLink !== "" &&
                                             <Link href={openSource.webLink} target="_blank">
-                                                <i className="fa-solid text-black fa-globe"></i>
+                                                <i className="fa-solid text-white fa-globe"></i>
                                             </Link>
                                         }
                                         {
                                             openSource.iosLink !== "" &&
                                             <Link href={openSource.iosLink} target="_blank">
-                                                <i className="fa-brands text-black fa-apple"></i>
+                                                <i className="fa-brands text-white fa-apple"></i>
                                             </Link>
                                         }
                                     </div>
                                 </div>
                             </div>
-                            <h5 className="italic text-left p-2 text-black">{openSource.subtitle}</h5>
-                            <p className="p-2 text-gray-500 whitespace-pre-wrap"> {openSource.text}</p>
+                            <h5 className="text-left p-2 text-white">{openSource.subtitle}</h5>
+                            <p className="p-2 text-white whitespace-pre-wrap"> {openSource.text}</p>
                         </div>
                     </div>
                 </div>
