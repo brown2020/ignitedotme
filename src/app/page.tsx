@@ -28,13 +28,21 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    // This check ensures the code runs only in the browser and not during SSR
     if (typeof window !== "undefined") {
       const wow = new WOW();
       wow.init();
+
+      window.onscroll = function () {
+        scrollFunction();
+      };
     }
 
-    window.onscroll = function () {
-      scrollFunction();
+    // Cleanup function to remove event listener when component unmounts
+    return () => {
+      if (typeof window !== "undefined") {
+        window.onscroll = null;
+      }
     };
   }, []);
 
@@ -82,24 +90,26 @@ export default function Home() {
   };
 
   const scrollToSection = (id: string) => {
-    const header = document.getElementById("header");
-    const element = document.getElementById(id);
-    const headerOffset = 75; // Height of your sticky header
-    if (element) {
-      const elementPosition = element.getBoundingClientRect().top;
+    if (typeof window !== "undefined") {
+      const header = document.getElementById("header");
+      const element = document.getElementById(id);
+      const headerOffset = 75; // Height of your sticky header
+      if (element) {
+        const elementPosition = element.getBoundingClientRect().top;
 
-      let offsetTop = 0;
-      if (header) offsetTop = header.offsetTop;
+        let offsetTop = 0;
+        if (header) offsetTop = header.offsetTop;
 
-      const offsetPosition =
-        window.scrollY > offsetTop
-          ? elementPosition + window.scrollY - headerOffset
-          : elementPosition - headerOffset - headerOffset;
+        const offsetPosition =
+          window.scrollY > offsetTop
+            ? elementPosition + window.scrollY - headerOffset
+            : elementPosition - headerOffset - headerOffset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
     }
   };
 
