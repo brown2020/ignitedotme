@@ -7,6 +7,7 @@ import Link from "next/link";
 import { apps } from "@/data/apps";
 import { useParams } from "next/navigation";
 import Image from "next/image";
+import Navbar from "@/components/Navbar";
 
 const AppsDetails: React.FC = () => {
     const { appId } = useParams();
@@ -20,19 +21,21 @@ const AppsDetails: React.FC = () => {
     return (
         <div className="flex flex-col  space-y-5">
             <div>
+                <Navbar />
+
                 <div className="container mx-auto text-black main-container">
                     <div className="film-Details-title flex justify-center font-bold text-center py-8 wow animate__animated animate__fadeInDown">
                         <h2 className="text-4xl font-bold border-title capitalize text-white main-text-tital">App</h2>
                     </div>
-                    <div className="flex flex-col xl:flex-row gap-5 p-2 app-details-contant wow animate__animated animate__fadeInUp">
-                        <div className="w-full xl:w-1/3">
+                    <div className="flex flex-col xl:flex-row gap-5 p-2 app-details-contant">
+                        <div className="w-full xl:w-1/3 wow animate__animated animate__fadeInUp">
                             {
                                 app.screenshots?.length > 0 ?
                                     <Carousel slides={app.screenshots} /> :
                                     <Image src={app.source} alt={app.title} className="mx-auto" />
                             }
                         </div>
-                        <div className="details py-0 xl:w-2/3 ">
+                        <div className="details py-0 xl:w-2/3 wow animate__animated animate__fadeInRight">
                             <div className="mb-1 pb-2 flex justify-between  items-center pl-2">
                                 <h2 className="text-start relative">{app.title}</h2>
                                 <div className="mr-2 flex gap-3 items-center">

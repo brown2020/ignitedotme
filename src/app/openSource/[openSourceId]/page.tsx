@@ -2,6 +2,7 @@
 
 import Carousel from "@/app/components/Carousal";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import { openSources } from "@/data/openSource";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,19 +21,21 @@ const OpenSourceDetails: React.FC = () => {
     return (
         <div className="flex flex-col  space-y-5">
             <div>
+                <Navbar />
+
                 <div className="container mx-auto text-black main-container">
-                    <div className="film-Details-title flex justify-center font-bold text-center py-8">
+                    <div className="film-Details-title flex justify-center font-bold text-center py-8 wow animate__animated animate__fadeInDown">
                         <h2 className="text-4xl font-bold border-title capitalize text-white  main-text-tital">Open Source</h2>
                     </div>
                     <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 p-2 open-sources-contant">
-                        <div className="w-full flex flex-col items-center justify-center">
+                        <div className="w-full flex flex-col items-center justify-center wow animate__animated animate__fadeInUp">
                             {
                                 openSource.screenshots?.length > 0 ?
                                     <Carousel slides={openSource.screenshots} /> :
                                     <Image src={openSource.source} alt={openSource.title} className="mx-auto" />
                             }
                         </div>
-                        <div className="details py-0">
+                        <div className="details py-0 wow animate__animated animate__fadeInRight">
                             <div className="mb-1 pb-2 flex justify-between  items-center pl-2">
                                 <h2 className="text-start relative">{openSource.title}</h2>
                                 <div className="mr-2 flex gap-3 items-center">

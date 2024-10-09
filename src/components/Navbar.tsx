@@ -50,14 +50,14 @@ const Navbar: React.FC = () => {
     const scrollToSection = (id: string) => {
         const header = document.getElementById("header");
         const element = document.getElementById(id);
-        const headerOffset = 75; // Height of your sticky header
+        const headerOffset = 78; // Height of your sticky header
         if (element) {
             const elementPosition = element.getBoundingClientRect().top;
 
             let offsetTop = 0;
             if (header) offsetTop = header.offsetTop;
 
-            const offsetPosition = window.scrollY > offsetTop ? elementPosition + window.scrollY - headerOffset : elementPosition - headerOffset - headerOffset;
+            const offsetPosition = window.scrollY > offsetTop ? elementPosition + window.scrollY - headerOffset : elementPosition - headerOffset - headerOffset + headerOffset;
 
             window.scrollTo({
                 top: offsetPosition,
@@ -86,8 +86,8 @@ const Navbar: React.FC = () => {
     };
 
     return (
-        <div id="header" className={`${isFixed ? "fixed-header" : ""} ${pathname === "/" ? "bg-slate-900/10 text-white" : "text-black header "} bg-black text-lg z-20 flex items-center justify-between`}>
-            <div className="flex justify-between items-center container py-3 mx-auto">
+        <div id="header" className={`${isFixed ? "fixed-header" : ""} ${pathname === "/" ? " text-white" : "text-black header "}  text-lg z-20 flex items-center justify-between`}>
+            <div className="flex justify-between items-center container py-3 mx-auto nav-main">
                 <div>
                     <Link href="/">
                         {/* Use next/image component for optimized image rendering */}
@@ -96,7 +96,7 @@ const Navbar: React.FC = () => {
                             alt="logo"
                             width={48} // Set appropriate width
                             height={48} // Set appropriate height
-                            className="rounded-md cursor-pointer"
+                            className="rounded-md cursor-pointer wow animate__animated animate__flip"
                         />
                     </Link>
                 </div>

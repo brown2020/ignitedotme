@@ -1,6 +1,7 @@
 "use client";
 
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import { talks } from "@/data/talks";
 import { NextPage } from "next";
 import Link from "next/link";
@@ -18,8 +19,10 @@ const TalkDetails: NextPage = () => {
 
     return (
         <div>
+            <Navbar />
+
             <div className="container mx-auto text-black main-container">
-                <div className="film-Details-title flex justify-center font-bold text-center py-8">
+                <div className="film-Details-title flex justify-center font-bold text-center py-8 wow animate__animated animate__fadeInDown">
                     <h2 className="text-4xl font-bold border-title capitalize text-white main-text-tital">Talk</h2>
                 </div>
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5 p-2 talk-details-contant">
@@ -32,9 +35,10 @@ const TalkDetails: NextPage = () => {
                             frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
+                            className=" wow animate__animated animate__fadeInUp"
                         ></iframe>
                     </div>
-                    <div className="details py-0">
+                    <div className="details py-0  wow animate__animated animate__fadeInRight">
                         <div className="mb-2 pb-2 flex justify-between  p-2">
                             <Link href={talk.link}>
                                 <h2 className="text-start relative">{talk.title}</h2>
