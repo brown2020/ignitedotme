@@ -18,13 +18,11 @@ const Vimeo: React.FC<IVimeoProps> = ({
     source,
     title,
     subtitle,
-    // link,
-    // next,
     text,
     details
 }) => {
     return (
-        <div className="flex flex-col space-y-3 first-of-type:mt-5 border border-slate-100 video-grid-section" id={id}>
+        <div className="flex flex-col space-y-3 first-of-type:mt-5 video-grid-section bg-[#14151B] rounded-md overflow-hidden wow animate__animated animate__fadeInUp" id={id}>
             <div className="videoWrapper mt-0">
                 <iframe
                     width="560"
@@ -36,14 +34,14 @@ const Vimeo: React.FC<IVimeoProps> = ({
                     allowFullScreen
                 ></iframe>
             </div>
-            <div className="flex flex-col max-w-2xl px-2 mx-auto my-4  text-center mx-sm-5 py-2">
+            <div className="flex flex-col max-w-2xl px-2 mx-auto my-4  text-center mx-sm-5 py-2 video-detail-section">
                 <Link href={`${details}/${id}`}>
                     <h2 className="text-left p-2 text-orange-400">{title}</h2>
-                    <h5 className="italic text-left p-2 text-black">{subtitle}</h5>
+                    <h5 className="text-left p-2 text-white">{subtitle}</h5>
                     {/* Render text string */}
                     <div>
-                        <p className="text-left  p-2 text-gray-500 whitespace-pre-wrap ">{text?.slice(0, 150)}...
-                            <span className="ml-2 text-lg text-orange-400 underline cursor-pointer">View More</span>
+                        <p className="text-left  p-2 text-white whitespace-pre-wrap ">{text?.slice(0, 150)}...
+                            <span className="ml-2 text-lg text-orange-400 underline cursor-pointer view-more-section"><strong className="box-overlay">View More</strong></span>
                         </p>
                     </div>
                 </Link>

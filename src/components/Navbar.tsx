@@ -50,14 +50,14 @@ const Navbar: React.FC = () => {
     const scrollToSection = (id: string) => {
         const header = document.getElementById("header");
         const element = document.getElementById(id);
-        const headerOffset = 64; // Height of your sticky header
+        const headerOffset = 78; // Height of your sticky header
         if (element) {
             const elementPosition = element.getBoundingClientRect().top;
 
             let offsetTop = 0;
             if (header) offsetTop = header.offsetTop;
 
-            const offsetPosition = window.scrollY > offsetTop ? elementPosition + window.scrollY - headerOffset : elementPosition - headerOffset - headerOffset;
+            const offsetPosition = window.scrollY > offsetTop ? elementPosition + window.scrollY - headerOffset : elementPosition - headerOffset - headerOffset + headerOffset;
 
             window.scrollTo({
                 top: offsetPosition,
@@ -86,8 +86,8 @@ const Navbar: React.FC = () => {
     };
 
     return (
-        <div id="header" className={`${isFixed ? "fixed-header" : ""} ${pathname === "/" ? "bg-slate-900/10 text-white" : "text-black header "} text-lg z-20 flex items-center justify-between h-16 p-2 `}>
-            <div className="flex justify-between container mx-auto">
+        <div id="header" className={`${isFixed ? "fixed-header" : ""} ${pathname === "/" ? " text-white" : "text-black header "}  text-lg z-20 flex items-center justify-between`}>
+            <div className="flex justify-between items-center container py-3 mx-auto nav-main">
                 <div>
                     <Link href="/">
                         {/* Use next/image component for optimized image rendering */}
@@ -100,29 +100,29 @@ const Navbar: React.FC = () => {
                         />
                     </Link>
                 </div>
-                <div className="flex space-x-2 gap-5 navigation-bar header-options" id="menu-box">
-                    <ul className="flex gap-x-11 items-center">
-                        <li>
-                            <p className="font-bold nav-items relative cursor-pointer" onClick={() => scrollToSection("film")}>
+                <div className="flex items-center p-2 py-1  space-x-2 gap-5 navigation-bar header-options p-2  border-2 border-[#4D4D50] rounded-full" id="menu-box">
+                    <ul className="flex gap-x-11 items-center px-0">
+                        <li >
+                            <p className="font-bold nav-items relative cursor-pointer px-7 py-0 leading-9" onClick={() => scrollToSection("film")}>
                                 Film
                             </p>
                         </li>
-                        <li>
-                            <p className="font-bold nav-items relative cursor-pointer" onClick={() => scrollToSection("talks")}>
+                        <li >
+                            <p className="font-bold nav-items relative cursor-pointer px-7 py-0 leading-9" onClick={() => scrollToSection("talks")}>
                                 Talks
                             </p>
                         </li>
-                        <li>
-                            <p className="font-bold nav-items relative cursor-pointer" onClick={() => scrollToSection("apps")}>
+                        <li >
+                            <p className="font-bold nav-items relative cursor-pointer px-7 py-0 leading-9" onClick={() => scrollToSection("apps")}>
                                 Apps
                             </p>
                         </li>
-                        <li>
-                            <p className="font-bold nav-items relative cursor-pointer" onClick={() => scrollToSection("openSource")}>
+                        <li >
+                            <p className="font-bold nav-items relative cursor-pointer px-7 py-0 leading-9" onClick={() => scrollToSection("openSource")}>
                                 Open Source
                             </p>
                         </li>
-                        <li className={`${pathname !== "/" ? "text-black" : "text-white"} signup-btn capitalize cursor-pointer bg-transparent relative overflow-hidden`}>
+                        <li className={`${pathname !== "/" ? "text-black" : "text-white"} signup-btn capitalize cursor-pointer bg-transparent relative mobile-view-signup overflow-hidden`}>
                             <p className={`font-bold`} onClick={() => scrollToSection("sign-up")}>
                                 Signup
                             </p>
