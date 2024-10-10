@@ -96,11 +96,11 @@ const Navbar: React.FC = () => {
                             alt="logo"
                             width={48} // Set appropriate width
                             height={48} // Set appropriate height
-                            className="rounded-md cursor-pointer wow animate__animated animate__flip"
+                            className="rounded-md cursor-pointer"
                         />
                     </Link>
                 </div>
-                <div className="flex items-center p-2 py-1  space-x-2 gap-5 navigation-bar header-options p-2  border-2 border-[#fff] rounded-full" id="menu-box">
+                <div className="flex items-center p-2 py-1  space-x-2 gap-5 navigation-bar header-options p-2  border-2 border-[#4D4D50] rounded-full" id="menu-box">
                     <ul className="flex gap-x-11 items-center px-0">
                         <li >
                             <p className="font-bold nav-items relative cursor-pointer px-7 py-0 leading-9" onClick={() => scrollToSection("film")}>

@@ -34,7 +34,7 @@ const Vimeo: React.FC<IVimeoProps> = ({
                     allowFullScreen
                 ></iframe>
             </div>
-            <div className="flex flex-col max-w-2xl px-2 mx-auto my-4  text-center mx-sm-5 py-2 ">
+            <div className="flex flex-col max-w-2xl px-2 mx-auto my-4  text-center mx-sm-5 py-2 video-detail-section">
                 <Link href={`${details}/${id}`}>
                     <h2 className="text-left p-2 text-orange-400">{title}</h2>
                     <h5 className="text-left p-2 text-white">{subtitle}</h5>

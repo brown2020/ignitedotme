@@ -11,7 +11,7 @@ const OpenSources: React.FC = () => {
                     <div className="apps-img mt-0">
                         <Image src={openSource.source} alt={openSource.title} />
                     </div>
-                    <div className="flex flex-col max-w-2xl px-2 mx-auto my-4  text-center mx-sm-5 py-2">
+                    <div className="flex flex-col max-w-2xl px-2 mx-auto my-4  text-center mx-sm-5 py-2 detail-section">
                         <div className="flex justify-between items-center">
                             <Link href={`openSource/${openSource.id}`}>
                                 <h2 className="text-left p-2 text-orange-400">{openSource.title}</h2>

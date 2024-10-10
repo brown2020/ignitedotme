@@ -22,8 +22,9 @@ const FilmDetails: NextPage = () => {
             <Navbar />
 
             <div className="container mx-auto text-black main-container" style={{ minHeight: "768px" }}>
-                <div className="film-Details-title flex justify-center font-bold text-center py-8 mb-2 wow animate__animated animate__fadeInDown">
-                    <h2 className="text-4xl font-bold border-title capitalize text-white  main-text-tital">Film</h2>
+                <div className="film-Details-title container font-bold text-center py-8 mb-2 wow animate__animated animate__fadeInDown">
+                    {/* <h2 className="text-4xl font-bold border-title capitalize text-white  main-text-tital">Film</h2> */}
+                    <h2 className="text-4xl font-bold border-title capitalize text-white relative  main-text-tital"> <Link href={film.link}>{film.title}</Link></h2>
                 </div>
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 p-2 film-details-contant">
                     <div className="w-full ">
@@ -38,13 +39,13 @@ const FilmDetails: NextPage = () => {
                             className=" wow animate__animated animate__fadeLeft"
                         ></iframe>
                     </div>
-                    <div className="details py-0  wow animate__animated animate__fadeInRight">
-                        <div className="mb-1 pb-2 flex justify-between p-2">
+                    <div className="details py-0  detail-section  wow animate__animated animate__fadeInRight">
+                        {/* <div className="mb-1 pb-2 flex justify-between p-2">
                             <Link href={film.link}>
                                 <h2 className="text-start relative">{film.title}</h2>
                             </Link>
-                        </div>
-                        <h5 className="text-left p-2 text-white">{film.subtitle}</h5>
+                        </div> */}
+                        <h5 className="text-left p-2 text-white py-0">{film.subtitle}</h5>
                         <p className="p-2 text-white whitespace-pre-wrap">{film.text}</p>
                     </div>
                 </div>
