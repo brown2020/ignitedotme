@@ -37,7 +37,6 @@ const AppsDetails: React.FC = () => {
                         </div>
                         <div className="details py-0 xl:w-2/3 wow animate__animated animate__fadeInRight detail-section">
                             <div className="mb-1 pb-2 flex justify-end  items-center pl-2">
-                                {/* <h2 className="text-start relative">{app.title}</h2> */}
                                 <div className="mr-2 flex gap-3 items-center">
                                     <div className="footer-icon_second flex space-x-2">
                                         {

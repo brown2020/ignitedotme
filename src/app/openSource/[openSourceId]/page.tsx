@@ -37,7 +37,6 @@ const OpenSourceDetails: React.FC = () => {
                         </div>
                         <div className="details py-0 wow  detail-section animate__animated animate__fadeInRight">
                             <div className="mb-1 pb-2 flex justify-end  items-center pl-2">
-                                {/* <h2 className="text-start relative">{openSource.title}</h2> */}
                                 <div className="mr-2 flex gap-3 items-center">
                                     <div className="footer-icon_second flex space-x-2">
                                         {
