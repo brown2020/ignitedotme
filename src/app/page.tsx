@@ -83,7 +83,7 @@ export default function Home() {
           {mainBanner?.map((item) => {
             return (
               <div
-                className="relative h-screen -mt-24 w-full main-slider-section"
+                className="relative h-screen -mt-16 lg:-mt-24 w-full main-slider-section"
                 key={item.id}
               >
                 {item.type === "video" ? (
