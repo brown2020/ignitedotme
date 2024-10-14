@@ -1,15 +1,20 @@
 import generateMe from "../app/assets/projectImages/generate.me.png";
 import promptMe from "../app/assets/projectImages/promptme.ai.png";
-// import purposeFinder from "../app/assets/projectImages/purpose finder.png";
 import { StaticImageData } from "next/image";
 
-// Define the type structure for each talk
+interface Screenshot {
+  src: StaticImageData;
+  alt: string;
+}
+
+// Define the type structure for each open source
 export interface OpenSources {
   id: string;
   source: StaticImageData;
   title: string;
   subtitle: string;
-  screenshots: [];
+  screenshots: Screenshot[];
+  gitLink: string;
   androidLink: string;
   iosLink: string;
   webLink: string;
@@ -17,7 +22,7 @@ export interface OpenSources {
   text: string;
 }
 
-// Create the array of talks with the specified type
+// Create the array of open sources with the specified type
 export const openSources: OpenSources[] = [
   {
     id: "generate-me",
@@ -25,6 +30,7 @@ export const openSources: OpenSources[] = [
     title: "Generate.me",
     subtitle: "Custom Image Creation with AI: Explore, Manage, and Innovate.",
     screenshots: [],
+    gitLink: "https://github.com/brown2020/generatemeai",
     androidLink: "",
     iosLink: "",
     webLink: "https://generate.me/",
@@ -43,9 +49,10 @@ This project is actively being developed, and contributions are welcome through 
     title: "Prompt.me",
     subtitle: "Compare AI Models in Real-Time",
     screenshots: [],
+    gitLink: "https://github.com/brown2020/promptmeai",
     androidLink: "",
     iosLink: "",
-    webLink: "https://github.com/brown2020/promptmeai",
+    webLink: "https://prompt.me/",
     next: "#generate-me",
     text: `Prompt.me is an innovative platform designed to let users interact with multiple AI models side-by-side. It provides a seamless experience for comparing outputs from various models, making it ideal for researchers, developers, and enthusiasts. The platform includes a credit-based payment system, allowing users to unlock premium features and manage their profiles securely.
 

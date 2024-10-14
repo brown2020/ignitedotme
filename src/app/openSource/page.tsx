@@ -5,7 +5,7 @@ import React from "react";
 
 const OpenSources: React.FC = () => {
     return (
-        <div className="mb-5 space-y-5 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 p-2 container mx-auto talks-section wow animate__animated animate__fadeInRight ">
+        <div className="mb-5 space-y-5 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 p-2 container mx-auto talks-section" data-aos="fade-right">
             {openSources.map((openSource) => (
                 <div className="flex flex-col space-y-3 first-of-type:mt-5 video-grid-section bg-[#14151B] rounded-md overflow-hidden" id={openSource.id} key={openSource.id}>
                     <div className="apps-img mt-0">
@@ -21,6 +21,12 @@ const OpenSources: React.FC = () => {
                                     openSource.webLink !== "" &&
                                     <Link href={openSource.webLink} target="_blank">
                                         <i className="fa-solid text-white fa-globe"></i>
+                                    </Link>
+                                }
+                                {
+                                    openSource.gitLink !== "" &&
+                                    <Link href={openSource.gitLink} target="_blank">
+                                        <i className="fa-brands text-white fa-github"></i>
                                     </Link>
                                 }
                                 {

@@ -295,3 +295,7 @@ input {
         margin: auto;
     }
 }
+
+body {
+    overflow-x: hidden;
+}

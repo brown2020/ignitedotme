@@ -1,14 +1,14 @@
 import headerImage from "@/app/assets/ignite-header.jpeg";
 import { StaticImageData } from "next/image";
 
-// Define the type structure for each talk
+// Define the type structure for each slider image
 export interface MainBanner {
   id: string;
   source: string | StaticImageData;
   type: "video" | "image";
 }
 
-// Create the array of talks with the specified type
+// Create the array of slider images with the specified type
 export const mainBanner: MainBanner[] = [
   {
     id: "1",
@@ -17,13 +17,7 @@ export const mainBanner: MainBanner[] = [
   },
   {
     id: "2",
-    source: "/assets/headerVideo1.mp4",
+    source: "68789661",
     type: "video",
-  },
-
-  {
-    id: "3",
-    source: "/assets/headerVideo2.mp4",
-    type: "video",
-  },
+  }
 ];

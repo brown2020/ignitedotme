@@ -18,4 +18,5 @@ export const Modal: React.FC<Props> = (props) => {
             </div>
         )
     }
+    return null;
 }

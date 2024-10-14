@@ -1,7 +1,7 @@
 "use client";
 
 import Image, { StaticImageData } from "next/image";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Footer from "@/components/Footer";
 import Apps from "./apps/page";
 import Talks from "./talks/page";
@@ -27,22 +27,6 @@ export default function Home() {
         if (videoRef.current) videoRef.current.play();
     }, []);
 
-    useEffect(() => {
-        // This check ensures the code runs only in the browser and not during SSR
-        if (typeof window !== "undefined") {
-            window.onscroll = function () {
-                scrollFunction();
-            };
-        }
-
-        // Cleanup function to remove event listener when component unmounts
-        return () => {
-            if (typeof window !== "undefined") {
-                window.onscroll = null;
-            }
-        };
-    }, []);
-
     const settings = {
         dots: true,
         infinite: true,
@@ -53,25 +37,6 @@ export default function Home() {
         autoplaySpeed: 20000,
         arrows: true,
     };
-
-    function scrollFunction() {
-        const returnToTop = document.getElementById("return-to-top");
-        if (!returnToTop) return;
-
-        if (
-            document.body.scrollTop > 20 ||
-            document.documentElement.scrollTop > 20
-        ) {
-            returnToTop.style.display = "block";
-        } else {
-            returnToTop.style.display = "none";
-        }
-    }
-
-    function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-    }
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -121,18 +86,15 @@ export default function Home() {
                                 <div className="relative h-screen -mt-16 w-full main-slider-section" key={item.id}>
                                     {
                                         item.type === 'video' ?
-                                            <video
-                                                ref={videoRef}
-                                                className="object-cover h-full w-full"
-                                                preload="auto"
-                                                autoPlay
-                                                loop
-                                                muted
-                                                playsInline
-                                            >
-                                                <source src={item.source as string} type="video/mp4" />
-                                                Your browser does not support the video tag.
-                                            </video> :
+                                            <div className="w-full slide-video">
+                                                <iframe
+                                                    src={`https://player.vimeo.com/video/${item.source as string}?autoplay=1&loop=auto&muted=1&background=1&title=0&byline=0&portrait=0`}
+                                                    frameBorder="0"
+                                                    allow="autoplay; fullscreen; picture-in-picture"
+                                                    allowFullScreen
+                                                    className="absolute inset-0 w-full h-full object-contain"
+                                                ></iframe>
+                                            </div> :
                                             <Image
                                                 src={item.source as StaticImageData}
                                                 alt="skydiver"
@@ -143,10 +105,10 @@ export default function Home() {
                                     {/* Container that holds the centered content */}
                                     <div className="absolute inset-0 flex flex-col items-center justify-center w-full h-full text-contant-section z-10">
                                         <div className="flex flex-col max-w-4xl pt-1">
-                                            <h1 className="text-center font-black hero_title wow animate__animated animate__slideInDown">
+                                            <h1 className="text-center font-black hero_title" data-aos="fade-down">
                                                 IGNITE
                                             </h1>
-                                            <p className="mx-5 text-center hero_details wow animate__animated animate__slideInUp">
+                                            <p className="mx-5 text-center hero_details" data-aos="fade-up">
                                                 Ignite Channel produces and distributes innovative documentary
                                                 films and media technology.{" "}
                                                 <span
@@ -183,10 +145,10 @@ export default function Home() {
                 {/* Film section */}
                 <div className="mt-5 mb-2 pt-5 pb-2" id="film">
                     <div className="container mx-auto">
-                        <h1 className="text-center  text-4xl text-title relative text-white capitalize section-title wow animate__animated animate__fadeInDown">
+                        <h1 className="text-center  text-4xl text-title relative text-white capitalize section-title" data-aos="fade-down">
                             Film
                         </h1>
-                        <p className="text-center mt-3 pt-5 w-full max-w-3xl m-auto text-white text-2xl p-2 wow animate__animated animate__fadeIn">
+                        <p className="text-center mt-3 pt-5 w-full max-w-3xl m-auto text-white text-2xl p-2" data-aos="fade">
                             Exploring the human experience through documentary features on art,
                             culture, science, and society.
                         </p>
@@ -196,10 +158,10 @@ export default function Home() {
 
                 {/* Talks section */}
                 <div className="mt-5 mb-2 pt-5 pb-2" id="talks">
-                    <h1 className="text-center  text-title relative text-white capitalize wow animate__animated animate__fadeInDown">
+                    <h1 className="text-center  text-title relative text-white capitalize" data-aos="fade-down">
                         Talks
                     </h1>
-                    <p className="text-center mt-3 pt-5 w-full  max-w-3xl m-auto text-white text-2xl p-2 wow animate__animated animate__fadeIn">
+                    <p className="text-center mt-3 pt-5 w-full  max-w-3xl m-auto text-white text-2xl p-2" data-aos="fade">
                         Inspiring ideas on technology, AI, and film: Keynotes and TEDx talks
                         that spark innovation.
                     </p>
@@ -208,10 +170,10 @@ export default function Home() {
 
                 {/* Apps section */}
                 <div className="mt-5 mb-2 pt-5 pb-2" id="apps">
-                    <h1 className="text-center  text-title relative text-white capitalize wow animate__animated animate__fadeInDown">
+                    <h1 className="text-center  text-title relative text-white capitalize" data-aos="fade-down">
                         Apps
                     </h1>
-                    <p className="text-center mt-3 pt-5 w-full  max-w-3xl m-auto text-white text-2xl p-2 wow animate__animated animate__fadeIn">
+                    <p className="text-center mt-3 pt-5 w-full  max-w-3xl m-auto text-white text-2xl p-2" data-aos="fade">
                         Discover apps from self-development to augmented reality, designed to
                         enhance your experience.
                     </p>
@@ -221,12 +183,12 @@ export default function Home() {
                 {/* Open source section */}
                 <div className="mt-5 mb-2 pt-5 pb-2" id="openSource">
                     <h1
-                        className="text-center  text-title relative text-white capitalize wow animate__animated animate__fadeInDown "
-                        data-wow-duration="2s"
+                        className="text-center  text-title relative text-white capitalize" data-aos="fade-down"
+                        data-aos-duration="2s"
                     >
                         Open Source
                     </h1>
-                    <p className="text-center mt-3 pt-5 w-full  max-w-3xl m-auto text-white text-2xl p-2 wow animate__animated animate__fadeIn">
+                    <p className="text-center mt-3 pt-5 w-full  max-w-3xl m-auto text-white text-2xl p-2" data-aos="fade">
                         Empowering creativity through collaboration: Explore, contribute, and
                         innovate with our open-source projects.
                     </p>
@@ -239,7 +201,7 @@ export default function Home() {
                     id="sign-up"
                 >
                     <div className="container py-16 z-10">
-                        <div className="signup_deatiles px-20 mx-20 mb-10 text-center wow animate__animated  animate__fadeInRight">
+                        <div className="signup_deatiles px-20 mx-20 mb-10 text-center" data-aos="fade-right">
                             <h3 className="text-4xl font-bold text-white section_title mb-3">
                                 Passionate about innovative media? Stay in touch!
                             </h3>
@@ -250,7 +212,7 @@ export default function Home() {
                                 collaborative spirit. Sign up to learn more.
                             </p>
                         </div>
-                        <div className="sigup-form backdrop-blur-sm flex flex-col items-center justify-center h-full max-w-7xl	px-6 py-10 rounded-lg text-center z-10 mx-auto shadow-2xl  wow animate__animated animate__fadeInLeft">
+                        <div className="sigup-form backdrop-blur-sm flex flex-col items-center justify-center h-full max-w-7xl	px-6 py-10 rounded-lg text-center z-10 mx-auto shadow-2xl" data-aos="fade-left">
                             <form className="w-full space-y-6" onSubmit={handleSubmit}>
                                 <input
                                     onChange={(e) =>
@@ -321,9 +283,6 @@ export default function Home() {
                 <div className="w-full footer_icon">
                     <Footer />
                 </div>
-                <button onClick={topFunction} id="return-to-top" title="Go to top">
-                    <ChevronUp size={32} />
-                </button>
             </div>
         </>
     );

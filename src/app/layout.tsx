@@ -4,9 +4,9 @@ import "../components/components.css";
 import { Metadata } from "next";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
 import { Nunito } from "next/font/google";
-import InitWow from "./components/utils/InitWow";
+import ScrollToTopButton from '@/components/ScrollToTopButton';
+import InitAos from './components/utils/InitAos';
 
 const nunito = Nunito({
     subsets: ["latin"],
@@ -36,8 +36,10 @@ export default function RootLayout({
                 <link href='https://fonts.googleapis.com/css?family=Anek Latin' rel='stylesheet'></link>
             </head>
             <body className={`${nunito.className} flex flex-col min-h-screen w-full text-slate-50`}>
-                <InitWow />
+                <InitAos />
                 <div className="flex-1 master-contant">{children}</div>
+
+                <ScrollToTopButton />
             </body>
         </html>
     );

@@ -86,8 +86,8 @@ const Navbar: React.FC = () => {
     };
 
     return (
-        <div id="header" className={`${isFixed ? "fixed-header" : ""} ${pathname === "/" ? " text-white" : "text-black header "}  text-lg z-20 flex items-center justify-between`}>
-            <div className="flex justify-between items-center container py-3 mx-auto nav-main">
+        <div id="header" className={`${isFixed ? "fixed-header" : ""} ${pathname === "/" ? " text-white" : "text-black header "} ${(isFixed && pathname === '/') ? 'animate-navbar' : ''} text-lg z-20 flex items-center justify-between`}>
+            <div className="flex justify-between items-center container py-3 px-2 mx-auto nav-main">
                 <div>
                     <Link href="/">
                         {/* Use next/image component for optimized image rendering */}
@@ -122,8 +122,8 @@ const Navbar: React.FC = () => {
                                 Open Source
                             </p>
                         </li>
-                        <li className={`${pathname !== "/" ? "text-black" : "text-white"} signup-btn capitalize cursor-pointer bg-transparent relative mobile-view-signup overflow-hidden`}>
-                            <p className={`font-bold`} onClick={() => scrollToSection("sign-up")}>
+                        <li className={`${pathname !== "/" ? "text-black" : "text-white"} signup-btn capitalize cursor-pointer bg-transparent relative mobile-view-signup overflow-hidden`} onClick={() => scrollToSection("sign-up")}>
+                            <p className={`font-bold`} >
                                 Signup
                             </p>
                         </li>
@@ -131,7 +131,7 @@ const Navbar: React.FC = () => {
                 </div>
             </div>
 
-            <div className="responsive-menu ms-3 mx-3" onClick={addactiveclass}>
+            <div className="responsive-menu ms-3 mx-2" onClick={addactiveclass}>
                 <div className="header-menu-icon d-flex align-items-center justify-content-center">
                     <div className="menu-togle-new-class cursor-pointer p-2" id="menu-icon">
                         <span className="line"></span>

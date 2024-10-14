@@ -5,7 +5,7 @@ import React from "react";
 
 const Apps: React.FC = () => {
     return (
-        <div className="mb-5 space-y-5 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 p-2 container mx-auto talks-section  wow animate__animated animate__fadeInLeft">
+        <div className="mb-5 space-y-5 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 p-2 container mx-auto talks-section" data-aos="fade-left">
             {apps.map((app) => (
                 <div className="flex flex-col space-y-3 first-of-type:mt-5 rounded-md video-grid-section bg-[#14151B]" id={app.id} key={app.id}>
                     <div className="apps-img mt-0">

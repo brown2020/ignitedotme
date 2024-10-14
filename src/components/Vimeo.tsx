@@ -22,7 +22,7 @@ const Vimeo: React.FC<IVimeoProps> = ({
     details
 }) => {
     return (
-        <div className="flex flex-col space-y-3 first-of-type:mt-5 video-grid-section bg-[#14151B] rounded-md overflow-hidden wow animate__animated animate__fadeInUp" id={id}>
+        <div className="flex flex-col space-y-3 first-of-type:mt-5 video-grid-section bg-[#14151B] rounded-md overflow-hidden" data-aos="fade-up" id={id}>
             <div className="videoWrapper mt-0">
                 <iframe
                     width="560"
