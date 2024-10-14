@@ -16,8 +16,13 @@ export const mainBanner: MainBanner[] = [
     type: "image",
   },
   {
+    id: "3",
+    source: "334188827",
+    type: "video",
+  },
+  {
     id: "2",
     source: "68789661",
     type: "video",
-  }
+  },
 ];
