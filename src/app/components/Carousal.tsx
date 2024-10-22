@@ -1,15 +1,10 @@
 "use client";
 
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import React, { useState } from "react";
 
-interface slideArr {
-    src: StaticImageData,
-    alt: string
-}
-
 interface Props {
-    slides: slideArr[],
+    slides: string[],
     setShowModal: (show: boolean) => void
 }
 
@@ -36,7 +31,7 @@ const Carousel: React.FC<Props> = ({
                 <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
                     {slides.map((slide, index) => (
                         <div key={index} className={`absolute w-full transition-opacity duration-700 ease-in-out ${currentSlide === index ? "opacity-100" : "opacity-0"}`} data-carousel-item>
-                            <Image src={slide.src} className="block w-full h-full object-cover image-section cursor-pointer" alt={slide.alt} onClick={() => setShowModal(true)} />
+                            <Image src={slide} className="block w-full h-full object-cover image-section cursor-pointer" alt='image' width={100} height={100} onClick={() => setShowModal(true)} />
                         </div>
                     ))}
                 </div>
@@ -56,7 +51,7 @@ const Carousel: React.FC<Props> = ({
                         </div>
                         <button type="button" className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group arrow-left" onClick={prevSlide}>
                             <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-black/50 group-focus:outline-none">
-                                <svg className="w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <svg className="w-4 h-4 text-black" aria-hidden="true" fill="none" viewBox="0 0 6 10">
                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4" />
                                 </svg>
                                 <span className="sr-only">Previous</span>
@@ -64,7 +59,7 @@ const Carousel: React.FC<Props> = ({
                         </button>
                         <button type="button" className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group arrow-right" onClick={nextSlide}>
                             <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-black/50 group-focus:outline-none ">
-                                <svg className="w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <svg className="w-4 h-4 text-black" aria-hidden="true" fill="none" viewBox="0 0 6 10">
                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
                                 </svg>
                                 <span className="sr-only">Next</span>

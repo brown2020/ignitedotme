@@ -1,9 +1,7 @@
-// src/components/CookieConsentWrapper.tsx
 "use client";
 
 import dynamic from "next/dynamic";
 
-// Dynamically import react-cookie-consent with SSR disabled
 const CookieConsent = dynamic(() => import("react-cookie-consent"), {
   ssr: false,
 });

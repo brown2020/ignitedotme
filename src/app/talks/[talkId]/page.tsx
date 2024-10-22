@@ -1,21 +1,45 @@
 "use client";
 
+import { getDocumentById } from "@/app/lib/utils/firestoreUtils";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import { talks } from "@/data/talks";
 import { NextPage } from "next";
-import Link from "next/link";
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+interface Talk {
+    id: string;
+    talk_title: string;
+    talk_description: string;
+    video_link: string;
+}
 
 const TalkDetails: NextPage = () => {
     const { talkId } = useParams();
 
-    const talk = talks.find((f) => f.id === talkId);
+    const [talksData, setTalksData] = useState<Talk>();
 
-    if (!talk) {
-        return <div>Talk not found</div>;
-    }
+    useEffect(() => {
+        const fetchTalkData = async () => {
+            if (talkId && talkId !== "add") {
+                if (typeof talkId !== 'string') {
+                    throw new Error("Invalid talk ID");
+                }
+
+                const fetchedtalk = await getDocumentById('talks', talkId);
+                if (fetchedtalk) {
+                    setTalksData({
+                        id: fetchedtalk.id as string || "",
+                        talk_title: fetchedtalk.talk_title as string || "",
+                        video_link: fetchedtalk.video_link as string || "",
+                        talk_description: fetchedtalk.talk_description as string || ""
+                    });
+                }
+            }
+        };
+
+        fetchTalkData();
+    }, [talkId]);
 
     return (
         <div className='flex flex-col h-lvh'>
@@ -23,24 +47,27 @@ const TalkDetails: NextPage = () => {
                 <Navbar />
                 <div className="container container-fluid-custom mx-auto text-black main-container talk-container">
                     <div className="film-Details-title container font-bold text-center mt-3 py-9" data-aos="fade-down">
-                        <h2 className="text-4xl font-bold border-title capitalize text-white relative main-text-tital"><Link href={talk.link}>{talk.title}</Link></h2>
+                        <h2 className="text-4xl font-bold border-title capitalize text-white relative main-text-tital">
+                            {talksData?.talk_title}
+                        </h2>
                     </div>
                     <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5 p-2 talk-details-contant">
                         <div className="w-full">
                             <iframe
                                 width="100%"
                                 height="500"
-                                src={talk.source}
-                                title={talk.title}
+                                src={talksData?.video_link}
+                                title={talksData?.talk_title}
                                 frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; autoplay; fullscreen; picture-in-picture"
                                 allowFullScreen
                                 data-aos="fade-up"
                             ></iframe>
                         </div>
                         <div className="details py-0 detail-section" data-aos="fade-right">
-                            <h5 className="text-left p-2 text-white py-0">{talk.subtitle}</h5>
-                            <p className="p-2 text-white whitespace-pre-wrap">{talk.text}</p>
+                            <p className="p-2 text-white whitespace-pre-wrap">
+                                <div dangerouslySetInnerHTML={{ __html: talksData?.talk_description || "" }} />
+                            </p>
                         </div>
                     </div>
                 </div>

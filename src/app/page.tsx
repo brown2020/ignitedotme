@@ -89,9 +89,8 @@ export default function Home() {
                 {item.type === "video" ? (
                   <div className="w-full slide-video">
                     <iframe
-                      src={`https://player.vimeo.com/video/${
-                        item.source as string
-                      }?autoplay=1&loop=auto&muted=1&background=1&title=0&byline=0&portrait=0`}
+                      src={`https://player.vimeo.com/video/${item.source as string
+                        }?autoplay=1&loop=auto&muted=1&background=1&title=0&byline=0&portrait=0`}
                       frameBorder="0"
                       allow="autoplay; fullscreen; picture-in-picture"
                       allowFullScreen
@@ -106,7 +105,6 @@ export default function Home() {
                     className="object-cover h-full w-full"
                   />
                 )}
-                {/* Container that holds the centered content */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center w-full h-full text-contant-section z-10">
                   <div className="flex flex-col max-w-4xl pt-1">
                     <h1

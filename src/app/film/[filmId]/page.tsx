@@ -2,20 +2,43 @@
 
 import Footer from "@/components/Footer";
 import { NextPage } from "next";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { films } from "@/data/films";
-import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { getDocumentById } from "@/app/lib/utils/firestoreUtils";
+
+interface Film {
+    id: string;
+    film_title: string;
+    film_description: string;
+    video_link: string;
+}
 
 const FilmDetails: NextPage = () => {
     const { filmId } = useParams();
+    const [filmsData, setFilmsData] = useState<Film>();
 
-    const film = films.find((f) => f.id === filmId);
+    useEffect(() => {
+        const fetchFilmData = async () => {
+            if (filmId && filmId !== "add") {
+                if (typeof filmId !== 'string') {
+                    throw new Error("Invalid film ID");
+                }
 
-    if (!film) {
-        return <div>Film not found</div>;
-    }
+                const fetchedFilm = await getDocumentById('films', filmId);
+                if (fetchedFilm) {
+                    setFilmsData({
+                        id: fetchedFilm.id as string || "",
+                        film_title: fetchedFilm.film_title as string || "",
+                        video_link: fetchedFilm.video_link as string || "",
+                        film_description: fetchedFilm.film_description as string || ""
+                    });
+                }
+            }
+        };
+
+        fetchFilmData();
+    }, [filmId]);
 
     return (
         <div className="flex flex-col h-lvh">
@@ -24,24 +47,25 @@ const FilmDetails: NextPage = () => {
 
                 <div className="container  container-fluid-custom mx-auto text-black main-container film-main-container">
                     <div className="film-Details-title container font-bold text-center mt-3 py-9 mb-2" data-aos="fade-down">
-                        <h2 className="text-4xl font-bold border-title capitalize text-white relative  main-text-tital"> <Link href={film.link}>{film.title}</Link></h2>
+                        <h2 className="text-4xl font-bold border-title capitalize text-white relative  main-text-tital">
+                            {filmsData?.film_title}
+                        </h2>
                     </div>
                     <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 p-2 film-details-contant">
                         <div className="w-full ">
                             <iframe
                                 width="100%"
                                 height="500"
-                                src={`https://player.vimeo.com/video/${film.source}?title=0&byline=0&portrait=0`}
-                                title={film.title}
+                                src={filmsData?.video_link}
+                                title={filmsData?.film_title}
                                 frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; autoplay; fullscreen; picture-in-picture"
                                 allowFullScreen
                                 data-aos="fade-left"
                             ></iframe>
                         </div>
                         <div className="details py-0  detail-section" data-aos="fade-right">
-                            <h5 className="text-left p-2 text-white py-0">{film.subtitle}</h5>
-                            <p className="p-2 text-white whitespace-pre-wrap">{film.text}</p>
+                            <div className="p-2 text-white" dangerouslySetInnerHTML={{ __html: filmsData?.film_description || "" }} />
                         </div>
                     </div>
                 </div>

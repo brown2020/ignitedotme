@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image"; // Import Image component from next/image
+import Image from "next/image";
 import React from "react";
 import { useEffect, useState } from "react";
 import logo from "../app/assets/logo192.png";
@@ -13,7 +13,6 @@ const Navbar: React.FC = () => {
     const [isFixed, setIsFixed] = useState(false);
 
     useEffect(() => {
-        // Function to check and update the header's offset position
         const checkOffset = () => {
             const header = document.getElementById("header");
             if (header) {
@@ -27,13 +26,9 @@ const Navbar: React.FC = () => {
             }
         };
 
-        // Run the check when the component is mounted
         checkOffset();
-
-        // Add scroll event listener
         window.addEventListener("scroll", checkOffset);
 
-        // Cleanup on component unmount
         return () => {
             window.removeEventListener("scroll", checkOffset);
         };
@@ -90,12 +85,11 @@ const Navbar: React.FC = () => {
             <div className="flex justify-between items-center container py-3 px-2 mx-auto nav-main">
                 <div>
                     <Link href="/">
-                        {/* Use next/image component for optimized image rendering */}
                         <Image
                             src={logo}
                             alt="logo"
-                            width={48} // Set appropriate width
-                            height={48} // Set appropriate height
+                            width={48}
+                            height={48}
                             className="rounded-md cursor-pointer"
                         />
                     </Link>
@@ -143,5 +137,4 @@ const Navbar: React.FC = () => {
         </div>
     );
 };
-{/* Styled JSX for scoping the styles */ }
 export default Navbar;
