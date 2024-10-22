@@ -4,13 +4,13 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBI3laHoOF3cmU7WT5RaPydHkKW2LWwV_Q",
-  authDomain: "ignitedotme.firebaseapp.com",
-  projectId: "ignitedotme",
-  storageBucket: "ignitedotme.appspot.com",
-  messagingSenderId: "610259718984",
-  appId: "1:610259718984:web:a4dd11b686e67f0550197d",
-  clientId: process.env.GOOGLE_CLIENT_ID,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGEBUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGINGSENDERID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APPID,
+  clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
