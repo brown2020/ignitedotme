@@ -1,26 +1,17 @@
 "use client";
 
-import { getDocumentById } from "@/app/lib/utils/firestoreUtils";
+import { getDocumentById } from "@/firebase/firestoreUtils";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-
-interface OpenSource {
-    id: string;
-    is_deleted: boolean;
-    open_source_title: string;
-    icon_link: string;
-    open_source_description: string;
-    web_link: string;
-    github_link: string;
-}
+import { OpenSourceObj } from "@/app/types/models";
 
 const OpenSourceDetails: React.FC = () => {
     const { openSourceId } = useParams();
-    const [openSourceData, setOpenSourceData] = useState<OpenSource>();
+    const [openSourceData, setOpenSourceData] = useState<OpenSourceObj>();
 
     useEffect(() => {
         const fetchOpenSourceData = async () => {

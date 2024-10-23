@@ -1,24 +1,14 @@
 "use client";
-import { deleteDocument, deleteImageFromStorage, fetchDocuments, updateDocument } from "@/app/lib/utils/firestoreUtils";
+import { deleteDocument, deleteImageFromStorage, fetchDocuments, updateDocument } from "@/firebase/firestoreUtils";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { DeleteConfirmation } from "../components/DeleteConfirmation";
-
-interface App {
-  id: string;
-  is_deleted: boolean;
-  app_title: string;
-  screenshots: string[];
-  app_description: string;
-  web_link: string;
-  ios_app_link: string;
-  android_app_link: string;
-}
+import { AppObj } from "@/app/types/models";
 
 export default function Apps() {
-  const [apps, setApps] = useState<App[]>([]);
+  const [apps, setApps] = useState<AppObj[]>([]);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<{ show: boolean, id: string, type: string }>({ show: false, id: "", type: "" });
 
@@ -33,14 +23,14 @@ export default function Apps() {
       id: app.id,
       is_deleted: app.is_deleted || false,
       app_title: app.app_title || "",
-      screenshots: app.screenshots || [],
+      screenshots: app.screenshots as string[] || [],
       app_description: app.app_description || "",
       web_link: app.web_link || "",
       ios_app_link: app.ios_app_link || "",
       android_app_link: app.android_app_link || "",
     }));
 
-    setApps(mappedApps as App[]);
+    setApps(mappedApps as AppObj[]);
   };
 
   const handleDelete = async () => {
@@ -118,7 +108,7 @@ export default function Apps() {
                       <td className="px-6 py-4 max-w-8 text-center">
                         {app.screenshots && app.screenshots.length > 0 && (
                           <Image
-                            src={app.screenshots[0]}
+                            src={app.screenshots[0] as string}
                             width={100}
                             height={100}
                             alt={app.app_title}

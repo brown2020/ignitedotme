@@ -1,23 +1,17 @@
 "use client";
 
-import { getDocumentById } from "@/app/lib/utils/firestoreUtils";
+import { getDocumentById } from "@/firebase/firestoreUtils";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { NextPage } from "next";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-
-interface Talk {
-    id: string;
-    talk_title: string;
-    talk_description: string;
-    video_link: string;
-}
+import { TalkObj } from "@/app/types/models";
 
 const TalkDetails: NextPage = () => {
     const { talkId } = useParams();
 
-    const [talksData, setTalksData] = useState<Talk>();
+    const [talksData, setTalksData] = useState<TalkObj>();
 
     useEffect(() => {
         const fetchTalkData = async () => {
@@ -30,6 +24,7 @@ const TalkDetails: NextPage = () => {
                 if (fetchedtalk) {
                     setTalksData({
                         id: fetchedtalk.id as string || "",
+                        is_deleted: fetchedtalk.is_deleted as boolean || false,
                         talk_title: fetchedtalk.talk_title as string || "",
                         video_link: fetchedtalk.video_link as string || "",
                         talk_description: fetchedtalk.talk_description as string || ""

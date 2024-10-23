@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import * as Yup from 'yup';
 import { useParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { addDocument, getDocumentById, updateDocument } from "@/app/lib/utils/firestoreUtils";
+import { addDocument, getDocumentById, updateDocument } from "@/firebase/firestoreUtils";
 
 interface FormData {
   film_title: string;

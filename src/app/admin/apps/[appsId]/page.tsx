@@ -7,10 +7,10 @@ import { useEffect, useRef, useState } from "react";
 import * as Yup from 'yup';
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
-import { storage } from "@/firebase";
+import { storage } from "@/firebase/firebase";
 import toast from "react-hot-toast";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { addDocument, getDocumentById, updateDocument } from "@/app/lib/utils/firestoreUtils";
+import { addDocument, getDocumentById, updateDocument } from "@/firebase/firestoreUtils";
 
 interface FormData {
   app_title: string;
@@ -27,7 +27,7 @@ export default function AppsDetails() {
   const runforms = useRef<FormikProps<FormData>>(null);
 
   const [type, setType] = useState<string>("add");
-  const [initialValues, setInitialValues] = useState({
+  const [initialValues, setInitialValues] = useState<FormData>({
     app_title: "",
     screenshots: [],
     web_link: "",
@@ -48,7 +48,7 @@ export default function AppsDetails() {
           setType('edit');
           setInitialValues({
             app_title: fetchedApp.app_title as string || "",
-            screenshots: fetchedApp.screenshots as never[] || [],
+            screenshots: fetchedApp.screenshots as string[] || [],
             web_link: fetchedApp.web_link as string || "",
             ios_app_link: fetchedApp.ios_app_link as string || "",
             android_app_link: fetchedApp.android_app_link as string || "",
@@ -80,9 +80,9 @@ export default function AppsDetails() {
     }
   };
 
-  const uploadImagesToStorage = async (screenshots: File[]): Promise<string[]> => {
+  const uploadImagesToStorage = async (screenshots: File[], id: string): Promise<string[]> => {
     const uploadPromises = screenshots.map(async (file) => {
-      const storageRef = ref(storage, `apps/${appsId}/${file.name}`);
+      const storageRef = ref(storage, `apps/${id}/${file.name}`);
       await uploadBytes(storageRef, file);
       return getDownloadURL(storageRef);
     });
@@ -93,43 +93,55 @@ export default function AppsDetails() {
   const handleSubmit = async (formData: FormData) => {
     try {
       let screenshotsURLs: string[] = [];
-
       const newScreenshots = formData.screenshots.filter((item) => item instanceof File) as File[];
-
-      if (newScreenshots.length > 0) {
-        screenshotsURLs = await uploadImagesToStorage(newScreenshots);
-      }
-
-      const updatedScreenshots = [
-        ...formData.screenshots.filter((item) => typeof item === 'string'),
-        ...screenshotsURLs,
-      ];
 
       if (type === 'edit') {
         if (typeof appsId !== 'string') {
           throw new Error("Invalid app ID");
         }
 
+        if (newScreenshots.length > 0) {
+          screenshotsURLs = await uploadImagesToStorage(newScreenshots, appsId);
+        }
+
+        const updatedScreenshots = [
+          ...formData.screenshots.filter((item) => typeof item === 'string'),
+          ...screenshotsURLs,
+        ];
+
         const updatedData = {
           app_title: formData.app_title,
           screenshots: updatedScreenshots,
-          web_link: formData.web_link,
-          ios_app_link: formData.ios_app_link,
-          android_app_link: formData.android_app_link,
+          web_link: formData.web_link || "",
+          ios_app_link: formData.ios_app_link || "",
+          android_app_link: formData.android_app_link || "",
           app_description: formData.app_description,
         };
+
         await updateDocument('apps', appsId, updatedData);
         toast.success("App updated successfully!");
       } else {
         const newItem = {
           app_title: formData.app_title,
-          screenshots: updatedScreenshots,
-          web_link: formData.web_link,
-          ios_app_link: formData.ios_app_link,
-          android_app_link: formData.android_app_link,
+          screenshots: null,
+          web_link: formData.web_link || "",
+          ios_app_link: formData.ios_app_link || "",
+          android_app_link: formData.android_app_link || "",
           app_description: formData.app_description,
         };
-        await addDocument('apps', newItem);
+
+        const docRef = await addDocument('apps', newItem);
+        if (newScreenshots.length > 0) {
+          screenshotsURLs = await uploadImagesToStorage(newScreenshots, docRef);
+        }
+
+        const updatedScreenshots = [
+          ...formData.screenshots.filter((item) => typeof item === 'string'),
+          ...screenshotsURLs,
+        ];
+
+        await updateDocument("apps", docRef, { screenshots: updatedScreenshots });
+
         toast.success("App added successfully!");
       }
 

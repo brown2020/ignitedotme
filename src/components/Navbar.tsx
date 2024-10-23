@@ -6,11 +6,21 @@ import React from "react";
 import { useEffect, useState } from "react";
 import logo from "../app/assets/logo192.png";
 import { usePathname, useRouter } from "next/navigation";
+import { Context } from "@/app/context/Context";
 
 const Navbar: React.FC = () => {
     const router = useRouter();
-    const pathname = usePathname()
+    const pathname = usePathname();
+    const { data } = Context();
     const [isFixed, setIsFixed] = useState(false);
+
+    const Navbar = [
+        { title: 'Film', path: 'film', dataLength: data.films?.length },
+        { title: 'Talks', path: 'talks', dataLength: data.talks?.length },
+        { title: 'Apps', path: 'apps', dataLength: data.apps?.length },
+        { title: 'Open Source', path: 'openSource', dataLength: data.openSources?.length },
+        { title: 'Blogs', path: 'blogs', dataLength: data.blogs?.length },
+    ]
 
     useEffect(() => {
         const checkOffset = () => {
@@ -94,30 +104,23 @@ const Navbar: React.FC = () => {
                         />
                     </Link>
                 </div>
-                <div className="flex items-center p-2 py-1  space-x-2 gap-5 navigation-bar header-options p-2  border-2 border-[#4D4D50] rounded-full" id="menu-box">
+                <div className="flex items-center py-1  space-x-2 gap-5 navigation-bar header-options p-2  border-2 border-[#4D4D50] rounded-full" id="menu-box">
                     <ul className="flex gap-x-11 items-center px-0">
-                        <li >
-                            <p className="font-bold nav-items relative cursor-pointer px-7 py-0 leading-9" onClick={() => scrollToSection("film")}>
-                                Film
-                            </p>
-                        </li>
-                        <li >
-                            <p className="font-bold nav-items relative cursor-pointer px-7 py-0 leading-9" onClick={() => scrollToSection("talks")}>
-                                Talks
-                            </p>
-                        </li>
-                        <li >
-                            <p className="font-bold nav-items relative cursor-pointer px-7 py-0 leading-9" onClick={() => scrollToSection("apps")}>
-                                Apps
-                            </p>
-                        </li>
-                        <li >
-                            <p className="font-bold nav-items relative cursor-pointer px-7 py-0 leading-9" onClick={() => scrollToSection("openSource")}>
-                                Open Source
-                            </p>
-                        </li>
+                        {
+                            Navbar?.map((nav, index) => {
+                                if (nav.dataLength > 0) {
+                                    return (
+                                        <li key={index}>
+                                            <p className="font-bold nav-items relative cursor-pointer px-5 py-0 leading-9" onClick={() => scrollToSection(nav.path)}>
+                                                {nav.title}
+                                            </p>
+                                        </li>
+                                    )
+                                }
+                            })
+                        }
                         <li className={`${pathname !== "/" ? "text-black" : "text-white"} signup-btn capitalize cursor-pointer bg-transparent relative mobile-view-signup overflow-hidden`} onClick={() => scrollToSection("sign-up")}>
-                            <p className={`font-bold`} >
+                            <p className={`font-bold`}>
                                 Signup
                             </p>
                         </li>

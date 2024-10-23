@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import "./style.css";
 import Image from "next/image";
 import { Spinner } from "./components/ui/Spinner";
+import logo from "../../app/assets/logo192.png";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     const pathname = usePathname();
@@ -102,9 +103,18 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                     id="sidebar"
                 >
                     <div className="p-6 flex justify-between items-center">
-                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                            Ignite Admin
-                        </h1>
+                        <div className="text-2xl font-bold text-gray-900 dark:text-white flex items-center">
+                            <Image
+                                src={logo}
+                                alt="logo"
+                                width={40}
+                                height={40}
+                                className="rounded-md cursor-pointer"
+                            />
+                            <h1 className="text-2xl font-bold text-gray-900 dark:text-white ms-3">
+                                Ignite Admin
+                            </h1>
+                        </div>
                         <button
                             className="text-gray-700 dark:text-gray-300 focus:outline-none"
                             id="toggleSidebar-1"
@@ -163,6 +173,15 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                             <div className="flex gap-3 items-center">
                                 <div className="w-[25px] flex items-center justify-center"><i className="fas fa-blog"></i></div>
                                 <p>Blogs</p>
+                            </div>
+                        </Link>
+                        <Link
+                            href="/admin/users"
+                            className={`block py-2 px-6 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white ${pathname === "/admin/users" ? "bg-gray-200 dark:bg-gray-700" : ""}`}
+                        >
+                            <div className="flex gap-3 items-center">
+                                <div className="w-[25px] flex items-center justify-center"><i className="fa-solid fa-users"></i></div>
+                                <p>Users</p>
                             </div>
                         </Link>
                     </nav>

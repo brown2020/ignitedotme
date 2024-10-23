@@ -1,20 +1,13 @@
 "use client";
-import { deleteDocument, fetchDocuments, updateDocument } from "@/app/lib/utils/firestoreUtils";
+import { deleteDocument, fetchDocuments, updateDocument } from "@/firebase/firestoreUtils";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { DeleteConfirmation } from "../components/DeleteConfirmation";
-
-interface Talk {
-  id: string;
-  is_deleted: boolean;
-  talk_title: string;
-  talk_description: string;
-  video_link: string;
-}
+import { TalkObj } from "@/app/types/models";
 
 export default function Talk() {
-  const [talks, setTalks] = useState<Talk[]>([]);
+  const [talks, setTalks] = useState<TalkObj[]>([]);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<{ show: boolean, id: string, type: string }>({ show: false, id: "", type: "" });
 
@@ -33,7 +26,7 @@ export default function Talk() {
       video_link: talk.video_link,
     }));
 
-    setTalks(mappedTalks as Talk[]);
+    setTalks(mappedTalks as TalkObj[]);
   };
 
   const handleDelete = async () => {

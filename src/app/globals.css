@@ -50,7 +50,7 @@ html {
 
 h1,
 h2 {
-  font-family: var(--font-zain);
+  font-family: var(--font-zain), sans-serif;
   font-weight: 900;
 }
 
@@ -61,7 +61,7 @@ h2 {
 
 h5,
 p {
-  font-family: var(--font-anekLatin);
+  font-family: var(--font-anekLatin), sans-serif;
   font-size: 20px;
 }
 

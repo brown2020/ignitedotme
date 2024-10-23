@@ -2,45 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { fetchDocuments } from "../lib/utils/firestoreUtils";
-
-interface OpenSource {
-    id: string;
-    is_deleted: boolean;
-    open_source_title: string;
-    icon_link: string;
-    open_source_description: string;
-    web_link: string;
-    github_link: string;
-}
+import React from "react";
+import { Context } from "../context/Context";
 
 const OpenSources: React.FC = () => {
-    const [openSources, setOpenSources] = useState<OpenSource[]>([]);
-
-    useEffect(() => {
-        fetchOpenSources();
-    }, []);
-
-    const fetchOpenSources = async () => {
-        const openSourcesList = await fetchDocuments('open_sources');
-
-        const mappedOpenSources = openSourcesList.map(openSource => ({
-            id: openSource.id,
-            is_deleted: openSource.is_deleted || false,
-            open_source_title: openSource.open_source_title,
-            icon_link: openSource.icon_link,
-            open_source_description: openSource.open_source_description,
-            web_link: openSource.web_link,
-            github_link: openSource.github_link,
-        }));
-
-        setOpenSources(mappedOpenSources as OpenSource[]);
-    };
+    const { data } = Context();
 
     return (
         <div className="mb-5 space-y-5 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 p-2 container mx-auto talks-section" data-aos="fade-right">
-            {openSources?.filter((f) => !f.is_deleted)?.map((openSource) => (
+            {data.openSources?.filter((f) => !f.is_deleted)?.map((openSource) => (
                 <div className="flex flex-col space-y-3 first-of-type:mt-5 video-grid-section bg-[#14151B] rounded-md overflow-hidden" id={openSource.id} key={openSource.id}>
                     <div className="apps-img mt-0">
                         <Image src={openSource.icon_link} alt={openSource.open_source_title} width={512} height={512} />
@@ -53,13 +23,13 @@ const OpenSources: React.FC = () => {
                             <div className="footer-icon_second flex space-x-2 p-2">
                                 {
                                     openSource.web_link !== "" &&
-                                    <Link href={openSource.web_link} target="_blank">
+                                    <Link href={openSource.web_link || ""} target="_blank">
                                         <i className="fa-solid text-white fa-globe"></i>
                                     </Link>
                                 }
                                 {
                                     openSource.github_link !== "" &&
-                                    <Link href={openSource.github_link} target="_blank">
+                                    <Link href={openSource.github_link || ""} target="_blank">
                                         <i className="fa-brands text-white fa-github"></i>
                                     </Link>
                                 }

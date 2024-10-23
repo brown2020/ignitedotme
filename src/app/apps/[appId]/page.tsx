@@ -9,23 +9,13 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import { Modal } from "@/app/components/Modal";
 import Slider from "react-slick";
-import { getDocumentById } from "@/app/lib/utils/firestoreUtils";
-
-interface App {
-    id: string;
-    is_deleted: boolean;
-    app_title: string;
-    screenshots: string[];
-    app_description: string;
-    web_link: string;
-    ios_app_link: string;
-    android_app_link: string;
-}
+import { getDocumentById } from "@/firebase/firestoreUtils";
+import { AppObj } from "@/app/types/models";
 
 const AppsDetails: React.FC = () => {
     const { appId } = useParams();
     const [showModal, setShowModal] = useState(false);
-    const [appData, setAppData] = useState<App>();
+    const [appData, setAppData] = useState<AppObj>();
 
     useEffect(() => {
         const fetchAppData = async () => {
@@ -89,7 +79,7 @@ const AppsDetails: React.FC = () => {
                         <div className="w-full xl:w-1/3" data-aos="fade-up">
                             {
                                 appData?.screenshots && appData?.screenshots?.length > 0 &&
-                                <Carousel slides={appData?.screenshots || []} setShowModal={setShowModal} />
+                                <Carousel slides={appData?.screenshots as string[] || []} setShowModal={setShowModal} />
                             }
                         </div>
                         <div className="details py-0 xl:w-2/3 detail-section" data-aos="fade-right">
@@ -138,7 +128,7 @@ const AppsDetails: React.FC = () => {
                             <Slider {...settings}>
                                 {appData?.screenshots.map((slide, index) => (
                                     <div key={index}>
-                                        <Image src={slide} width={100} height={100} className="block w-full h-full object-cover image-section cursor-pointer" alt='image' />
+                                        <Image src={slide as string} width={100} height={100} className="block w-full h-full object-cover image-section cursor-pointer" alt='image' />
                                     </div>
                                 ))}
                             </Slider>

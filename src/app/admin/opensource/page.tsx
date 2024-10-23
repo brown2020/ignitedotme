@@ -1,23 +1,14 @@
 "use client";
-import { deleteDocument, deleteImageFromStorage, fetchDocuments, updateDocument } from "@/app/lib/utils/firestoreUtils";
+import { deleteDocument, deleteImageFromStorage, fetchDocuments, updateDocument } from "@/firebase/firestoreUtils";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { DeleteConfirmation } from "../components/DeleteConfirmation";
-
-interface OpenSource {
-  id: string;
-  is_deleted: boolean;
-  open_source_title: string;
-  icon_link: string;
-  open_source_description: string;
-  web_link: string;
-  github_link: string;
-}
+import { OpenSourceObj } from "@/app/types/models";
 
 export default function OpenSource() {
-  const [openSources, setOpenSources] = useState<OpenSource[]>([]);
+  const [openSources, setOpenSources] = useState<OpenSourceObj[]>([]);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<{ show: boolean, id: string, type: string }>({ show: false, id: "", type: "" });
 
@@ -34,11 +25,11 @@ export default function OpenSource() {
       open_source_title: openSource.open_source_title,
       icon_link: openSource.icon_link,
       open_source_description: openSource.open_source_description,
-      web_link: openSource.web_link,
-      github_link: openSource.github_link,
+      web_link: openSource.web_link || "",
+      github_link: openSource.github_link || "",
     }));
 
-    setOpenSources(mappedOpenSources as OpenSource[]);
+    setOpenSources(mappedOpenSources as OpenSourceObj[]);
   };
 
   const handleDelete = async () => {

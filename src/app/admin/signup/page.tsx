@@ -3,7 +3,7 @@
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
 import { NextPage } from "next";
 import React, { useEffect } from "react";
-import { auth, db } from "../../../firebase";
+import { auth, db } from "../../../firebase/firebase";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { doc, getDoc, setDoc } from "firebase/firestore";
@@ -72,7 +72,7 @@ const Signup: NextPage = () => {
                 });
                 toast.success('User added successfully');
             } else {
-                toast.success('User already exists');
+                toast.success('User Logged in successully');
             }
 
             const token = await auth.currentUser?.getIdToken(true);

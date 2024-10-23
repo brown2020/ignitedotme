@@ -7,10 +7,10 @@ import { useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
-import { storage } from "@/firebase";
+import { storage } from "@/firebase/firebase";
 import toast from "react-hot-toast";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { addDocument, getDocumentById, updateDocument } from "@/app/lib/utils/firestoreUtils";
+import { addDocument, getDocumentById, updateDocument } from "@/firebase/firestoreUtils";
 
 interface FormData {
   open_source_title: string;
@@ -79,36 +79,48 @@ export default function OpenSourceDetails() {
     try {
       let iconURL = null;
 
-      if (formData.icon_link && formData.icon_link !== "") {
-        const file = formData.icon_link as File;
-        const storageRef = ref(storage, `open_sources/${openSourceId}/${file.name}`);
-        await uploadBytes(storageRef, file);
-        iconURL = await getDownloadURL(storageRef);
-      }
-
       if (type === "edit") {
         if (typeof openSourceId !== "string") {
           throw new Error("Invalid open source ID");
+        }
+
+        if (formData.icon_link && formData.icon_link !== "") {
+          const file = formData.icon_link as File;
+          const storageRef = ref(storage, `open_sources/${openSourceId}/${file.name}`);
+          await uploadBytes(storageRef, file);
+          iconURL = await getDownloadURL(storageRef);
         }
 
         const updatedData = {
           open_source_title: formData.open_source_title,
           icon_link: iconURL || initialValues.icon_link,
           open_source_description: formData.open_source_description,
-          web_link: formData.web_link,
-          github_link: formData.github_link,
+          web_link: formData.web_link || "",
+          github_link: formData.github_link || "",
         };
+
         await updateDocument('open_sources', openSourceId, updatedData);
         toast.success("Open source updated successfully!");
       } else {
         const newItem = {
           open_source_title: formData.open_source_title,
-          icon_link: iconURL,
+          icon_link: null,
           open_source_description: formData.open_source_description,
-          web_link: formData.web_link,
-          github_link: formData.github_link,
+          web_link: formData.web_link || "",
+          github_link: formData.github_link || "",
         };
-        await addDocument('open_sources', newItem);
+
+        const docRef = await addDocument('open_sources', newItem);
+
+        if (formData.icon_link && formData.icon_link !== "") {
+          const file = formData.icon_link as File;
+          const storageRef = ref(storage, `open_sources/${docRef}/${file.name}`);
+          await uploadBytes(storageRef, file);
+          iconURL = await getDownloadURL(storageRef);
+
+          await updateDocument("open_sources", docRef, { icon_link: iconURL });
+        }
+
         toast.success("Open source added successfully!");
       }
       router.push("/admin/opensource");

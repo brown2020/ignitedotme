@@ -1,20 +1,13 @@
 "use client";
-import { deleteDocument, fetchDocuments, updateDocument } from "@/app/lib/utils/firestoreUtils";
+import { deleteDocument, fetchDocuments, updateDocument } from "@/firebase/firestoreUtils";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { DeleteConfirmation } from "../components/DeleteConfirmation";
-
-interface Film {
-  id: string;
-  is_deleted: boolean;
-  film_title: string;
-  film_description: string;
-  video_link: string;
-}
+import { FilmObj } from "@/app/types/models";
 
 export default function Film() {
-  const [films, setFilms] = useState<Film[]>([]);
+  const [films, setFilms] = useState<FilmObj[]>([]);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<{ show: boolean, id: string, type: string }>({ show: false, id: "", type: "" });
 
@@ -33,7 +26,7 @@ export default function Film() {
       video_link: film.video_link,
     }));
 
-    setFilms(mappedFilms as Film[]);
+    setFilms(mappedFilms as FilmObj[]);
   };
 
   const handleDelete = async () => {

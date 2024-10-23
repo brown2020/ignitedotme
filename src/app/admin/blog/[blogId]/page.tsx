@@ -3,14 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 import TipTapEditor from "../../components/TipTapEditor";
 import Image from "next/image";
-import { storage } from "@/firebase";
+import { storage } from "@/firebase/firebase";
 import { useParams, useRouter } from "next/navigation";
 import { Formik, FormikProps } from "formik";
 import * as Yup from 'yup';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import toast from "react-hot-toast";
 import { errorContainer, formAttr } from "@/app/helpers/FuncHelper";
-import { addDocument, getDocumentById, updateDocument } from "@/app/lib/utils/firestoreUtils";
+import { addDocument, getDocumentById, updateDocument } from "@/firebase/firestoreUtils";
 
 interface FormData {
   blog_title: string;
@@ -24,7 +24,7 @@ export default function BlogDetails() {
   const runforms = useRef<FormikProps<FormData>>(null);
 
   const [type, setType] = useState<string>("add");
-  const [initialValues, setInitialValues] = useState({
+  const [initialValues, setInitialValues] = useState<FormData>({
     blog_title: "",
     blog_images: [],
     blog_description: ""
@@ -42,7 +42,7 @@ export default function BlogDetails() {
           setType('edit');
           setInitialValues({
             blog_title: fetchedBlog.blog_title as string || "",
-            blog_images: fetchedBlog.blog_images as never[] || [],
+            blog_images: fetchedBlog.blog_images as string[] || [],
             blog_description: fetchedBlog.blog_description as string || ""
           });
         }
@@ -71,9 +71,9 @@ export default function BlogDetails() {
     }
   };
 
-  const uploadImagesToStorage = async (blog_images: File[]): Promise<string[]> => {
+  const uploadImagesToStorage = async (blog_images: File[], id: string): Promise<string[]> => {
     const uploadPromises = blog_images.map(async (file) => {
-      const storageRef = ref(storage, `blogs/${blogId}/${file.name}`);
+      const storageRef = ref(storage, `blogs/${id}/${file.name}`);
       await uploadBytes(storageRef, file);
       return getDownloadURL(storageRef);
     });
@@ -84,37 +84,50 @@ export default function BlogDetails() {
   const handleSubmit = async (formData: FormData) => {
     try {
       let screenshotsURLs: string[] = [];
-
       const newScreenshots = formData.blog_images.filter((item) => item instanceof File) as File[];
-
-      if (newScreenshots.length > 0) {
-        screenshotsURLs = await uploadImagesToStorage(newScreenshots);
-      }
-
-      const updatedScreenshots = [
-        ...formData.blog_images.filter((item) => typeof item === 'string'),
-        ...screenshotsURLs,
-      ];
 
       if (type === 'edit') {
         if (typeof blogId !== 'string') {
           throw new Error("Invalid blog ID");
         }
 
+        if (newScreenshots.length > 0) {
+          screenshotsURLs = await uploadImagesToStorage(newScreenshots, blogId);
+        }
+
+        const updatedScreenshots = [
+          ...formData.blog_images.filter((item) => typeof item === 'string'),
+          ...screenshotsURLs,
+        ];
+
         const updatedData = {
           blog_title: formData.blog_title,
           blog_images: updatedScreenshots,
           blog_description: formData.blog_description,
         };
+
         await updateDocument('blogs', blogId, updatedData);
         toast.success("Blog updated successfully!");
       } else {
         const newItem = {
           blog_title: formData.blog_title,
-          blog_images: updatedScreenshots,
+          blog_images: null,
           blog_description: formData.blog_description,
         };
-        await addDocument('blogs', newItem);
+
+        const docRef = await addDocument('blogs', newItem);
+
+        if (newScreenshots.length > 0) {
+          screenshotsURLs = await uploadImagesToStorage(newScreenshots, docRef);
+        }
+
+        const updatedScreenshots = [
+          ...formData.blog_images.filter((item) => typeof item === 'string'),
+          ...screenshotsURLs,
+        ];
+
+        await updateDocument("blogs", docRef, { blog_images: updatedScreenshots });
+
         toast.success("Blog added successfully!");
       }
 

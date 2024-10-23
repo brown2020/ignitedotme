@@ -1,21 +1,14 @@
 "use client";
-import { deleteDocument, deleteImageFromStorage, fetchDocuments, updateDocument } from "@/app/lib/utils/firestoreUtils";
+import { deleteDocument, deleteImageFromStorage, fetchDocuments, updateDocument } from "@/firebase/firestoreUtils";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { DeleteConfirmation } from "../components/DeleteConfirmation";
-
-interface Blog {
-  id: string;
-  is_deleted: boolean;
-  blog_title: string;
-  blog_images: string[];
-  blog_description: string;
-}
+import { BlogObj } from "@/app/types/models";
 
 export default function Blog() {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [blogs, setBlogs] = useState<BlogObj[]>([]);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<{ show: boolean, id: string, type: string }>({ show: false, id: "", type: "" });
 
@@ -34,7 +27,7 @@ export default function Blog() {
       blog_description: blog.blog_description
     }));
 
-    setBlogs(mappedBlogs as Blog[]);
+    setBlogs(mappedBlogs as BlogObj[]);
   };
 
   const handleDelete = async () => {

@@ -5,18 +5,12 @@ import { NextPage } from "next";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
-import { getDocumentById } from "@/app/lib/utils/firestoreUtils";
-
-interface Film {
-    id: string;
-    film_title: string;
-    film_description: string;
-    video_link: string;
-}
+import { getDocumentById } from "@/firebase/firestoreUtils";
+import { FilmObj } from "@/app/types/models";
 
 const FilmDetails: NextPage = () => {
     const { filmId } = useParams();
-    const [filmsData, setFilmsData] = useState<Film>();
+    const [filmsData, setFilmsData] = useState<FilmObj>();
 
     useEffect(() => {
         const fetchFilmData = async () => {
@@ -29,6 +23,7 @@ const FilmDetails: NextPage = () => {
                 if (fetchedFilm) {
                     setFilmsData({
                         id: fetchedFilm.id as string || "",
+                        is_deleted: fetchedFilm.is_deleted as boolean || false,
                         film_title: fetchedFilm.film_title as string || "",
                         video_link: fetchedFilm.video_link as string || "",
                         film_description: fetchedFilm.film_description as string || ""
