@@ -10,7 +10,7 @@ const firebaseConfig = {
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGEBUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_MESSAGINGSENDERID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APPID,
-  clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+  clientId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENTID,
 };
 
 const app = initializeApp(firebaseConfig);
