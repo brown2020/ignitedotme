@@ -389,7 +389,7 @@
   content: "";
   inset: 0;
   background: #020205b8;
-  opacity: 0.8;
+  opacity: 0.3;
   z-index: 1;
   height: calc(100vh - -8rem);
 }
