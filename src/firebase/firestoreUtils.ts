@@ -8,6 +8,10 @@ import {
     deleteDoc,
     FirestoreError,
     getDoc,
+    orderBy,
+    query,
+    OrderByDirection,
+    QueryConstraint,
 } from 'firebase/firestore';
 import { deleteObject, listAll, ref } from 'firebase/storage';
 
@@ -17,9 +21,13 @@ export interface DocumentData {
     [key: string]: FieldValue;
 }
 
-export const fetchDocuments = async (collectionName: string) => {
+export const fetchDocuments = async (collectionName: string, sort?: { sort_by: string, order: OrderByDirection }) => {
     try {
-        const querySnapshot = await getDocs(collection(db, collectionName));
+        const constraints: QueryConstraint[] = [];
+        if (sort) {
+            constraints.push(orderBy(sort.sort_by, sort.order || "asc"));
+        }
+        const querySnapshot = await getDocs(query(collection(db, collectionName), ...constraints));
         return querySnapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),

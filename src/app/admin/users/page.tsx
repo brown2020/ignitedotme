@@ -1,4 +1,5 @@
 "use client";
+import { Context } from "@/app/context/Context";
 import { fetchDocuments, updateDocument } from "@/firebase/firestoreUtils";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -13,7 +14,8 @@ interface User {
     is_admin: boolean
 }
 
-export default function Users() {
+function Users() {
+    const { userLogin } = Context();
     const [users, setUsers] = useState<User[]>([]);
 
     useEffect(() => {
@@ -22,7 +24,6 @@ export default function Users() {
 
     const fetchUsers = async () => {
         const usersList = await fetchDocuments('users');
-        console.log(usersList)
 
         const mappedUsers = usersList.map(user => ({
             id: user.id,
@@ -43,7 +44,7 @@ export default function Users() {
 
             const updatedUsers = [...users];
             updatedUsers.splice(index, 1, { ...user, ...updatedData });
-            console.log(updatedUsers)
+            userLogin({ ...user, ...updatedData });
 
             setUsers(updatedUsers);
             toast.success('User updated successfully!');
@@ -66,7 +67,7 @@ export default function Users() {
     }
 
     return (
-        <>
+        // <AuthGuard>
             <div className="relative overflow-x-auto">
                 <div className="flex justify-between items-center mb-4">
                     <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-300">
@@ -128,12 +129,14 @@ export default function Users() {
                             })
                         ) : (
                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <td colSpan={5} className="py-10 text-center"><h3>No Data</h3></td>
+                                <td colSpan={6} className="py-10 text-center"><h3>No Data</h3></td>
                             </tr>
                         )}
                     </tbody>
                 </table>
             </div>
-        </>
+        // </AuthGuard>
     );
 }
+
+export default Users;

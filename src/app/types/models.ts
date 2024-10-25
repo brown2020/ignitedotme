@@ -14,6 +14,7 @@ export interface OpenSourceObj {
     open_source_description: string;
     web_link: string;
     github_link: string;
+    order_number?: number;
 }
 
 export interface AppObj {
@@ -25,6 +26,7 @@ export interface AppObj {
     web_link: string;
     ios_app_link: string;
     android_app_link: string;
+    order_number?: number;
 }
 
 export interface TalkObj {
@@ -33,6 +35,7 @@ export interface TalkObj {
     talk_title: string;
     talk_description: string;
     video_link: string;
+    order_number?: number;
 }
 
 export interface FilmObj {
@@ -41,4 +44,5 @@ export interface FilmObj {
     film_title: string;
     film_description: string;
     video_link: string;
+    order_number?: number;
 }

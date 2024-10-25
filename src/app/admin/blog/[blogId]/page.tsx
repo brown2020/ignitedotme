@@ -11,6 +11,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import toast from "react-hot-toast";
 import { errorContainer, formAttr } from "@/app/helpers/FuncHelper";
 import { addDocument, getDocumentById, updateDocument } from "@/firebase/firestoreUtils";
+import AuthGuard from "@/app/auth/AuthGuard";
 
 interface FormData {
   blog_title: string;
@@ -18,7 +19,7 @@ interface FormData {
   blog_description: string;
 }
 
-export default function BlogDetails() {
+function BlogDetails() {
   const { blogId } = useParams();
   const router = useRouter();
   const runforms = useRef<FormikProps<FormData>>(null);
@@ -139,99 +140,103 @@ export default function BlogDetails() {
   }
 
   return (
-    <div className="w-full mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg">
-      <h1 className="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-300">Edit Blog</h1>
-      <Formik
-        innerRef={runforms}
-        enableReinitialize
-        initialValues={initialValues}
-        validationSchema={Yup.object({
-          blog_title: Yup.string().required('Please enter title'),
-          blog_images: Yup.array().min(1, 'Please select Images'),
-          blog_description: Yup.string().required('Please enter description'),
-        })}
-        onSubmit={(values) => {
-          handleSubmit(values);
-        }}
-      >
-        {(runform) => (
-          <form onSubmit={runform.handleSubmit}>
-            <div className="mb-6">
-              <label className="block text-gray-700 text-sm font-semibold mb-2 dark:text-white">
-                Title
-              </label>
-              <input
-                type="text"
-                className="bg-transparent w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-indigo-500 dark:text-gray-300"
-                placeholder="Enter blog title..."
-                name="blog_title"
-                {...formAttr(runform, 'blog_title')}
-              />
-              {errorContainer(runform, 'blog_title')}
-            </div>
+    // <AuthGuard>
+      <div className="w-full mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg">
+        <h1 className="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-300">Edit Blog</h1>
+        <Formik
+          innerRef={runforms}
+          enableReinitialize
+          initialValues={initialValues}
+          validationSchema={Yup.object({
+            blog_title: Yup.string().required('Please enter title'),
+            blog_images: Yup.array().min(1, 'Please select Images'),
+            blog_description: Yup.string().required('Please enter description'),
+          })}
+          onSubmit={(values) => {
+            handleSubmit(values);
+          }}
+        >
+          {(runform) => (
+            <form onSubmit={runform.handleSubmit}>
+              <div className="mb-6">
+                <label className="block text-gray-700 text-sm font-semibold mb-2 dark:text-white">
+                  Title
+                </label>
+                <input
+                  type="text"
+                  className="bg-transparent w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-indigo-500 dark:text-gray-300"
+                  placeholder="Enter blog title..."
+                  name="blog_title"
+                  {...formAttr(runform, 'blog_title')}
+                />
+                {errorContainer(runform, 'blog_title')}
+              </div>
 
-            <div className="mb-6">
-              <label className="block text-gray-700 text-sm font-semibold mb-2 dark:text-white">
-                Add Images
-              </label>
-              <label
-                htmlFor="img"
-                className="dark:text-indigo-700 bg-indigo-100 text-indigo-700 file:mr-4 py-2 px-4 rounded-lg cursor-pointer hover:bg-indigo-200 text-sm font-semibold inline-block"
-              >
-                Select Images
-              </label>
-              <input
-                type="file"
-                id="img"
-                accept="image/*"
-                multiple
-                onChange={handleImageChange}
-                className="hidden"
-              />
-              {errorContainer(runform, 'blog_images')}
-              {runform.values.blog_images.length > 0 && (
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {runform.values.blog_images.map((image, index) => (
-                    <div key={index} className="relative max-w-max">
-                      <Image
-                        width={100}
-                        height={100}
-                        src={typeof image === "string" ? image : URL.createObjectURL(image)}
-                        alt={`Selected screenshot ${index + 1}`}
-                        className="w-full h-32 object-cover rounded-lg shadow-lg"
-                      />
-                      <button
-                        onClick={() => removeImage(index)}
-                        className="absolute top-2 right-2 bg-red-500 text-white px-2 rounded-full"
-                        type="button"
-                      >
-                        &times;
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+              <div className="mb-6">
+                <label className="block text-gray-700 text-sm font-semibold mb-2 dark:text-white">
+                  Add Images
+                </label>
+                <label
+                  htmlFor="img"
+                  className="dark:text-indigo-700 bg-indigo-100 text-indigo-700 file:mr-4 py-2 px-4 rounded-lg cursor-pointer hover:bg-indigo-200 text-sm font-semibold inline-block"
+                >
+                  Select Images
+                </label>
+                <input
+                  type="file"
+                  id="img"
+                  accept="image/*"
+                  multiple
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+                {errorContainer(runform, 'blog_images')}
+                {runform.values.blog_images.length > 0 && (
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {runform.values.blog_images.map((image, index) => (
+                      <div key={index} className="relative max-w-max">
+                        <Image
+                          width={100}
+                          height={100}
+                          src={typeof image === "string" ? image : URL.createObjectURL(image)}
+                          alt={`Selected screenshot ${index + 1}`}
+                          className="w-full h-32 object-cover rounded-lg shadow-lg"
+                        />
+                        <button
+                          onClick={() => removeImage(index)}
+                          className="absolute top-2 right-2 bg-red-500 text-white px-2 rounded-full"
+                          type="button"
+                        >
+                          &times;
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
 
-            <div className="mb-6">
-              <label
-                className="block text-gray-700 text-sm font-semibold mb-2 dark:text-white"
-                htmlFor="description"
-              >
-                Description
-              </label>
-              <TipTapEditor getEditorContent={handleEditorContent} content={initialValues.blog_description} />
-              {errorContainer(runform, 'blog_description')}
-            </div>
+              <div className="mb-6">
+                <label
+                  className="block text-gray-700 text-sm font-semibold mb-2 dark:text-white"
+                  htmlFor="description"
+                >
+                  Description
+                </label>
+                <TipTapEditor getEditorContent={handleEditorContent} content={initialValues.blog_description} />
+                {errorContainer(runform, 'blog_description')}
+              </div>
 
-            <div className="text-right">
-              <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all">
-                Save
-              </button>
-            </div>
-          </form>
-        )}
-      </Formik>
-    </div>
+              <div className="text-right">
+                <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all">
+                  Save
+                </button>
+              </div>
+            </form>
+          )}
+        </Formik>
+      </div>
+    // </AuthGuard>
   );
 }
+
+export default BlogDetails;

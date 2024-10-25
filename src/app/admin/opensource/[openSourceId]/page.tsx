@@ -10,7 +10,13 @@ import Image from "next/image";
 import { storage } from "@/firebase/firebase";
 import toast from "react-hot-toast";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { addDocument, getDocumentById, updateDocument } from "@/firebase/firestoreUtils";
+import {
+  addDocument,
+  fetchDocuments,
+  getDocumentById,
+  updateDocument,
+} from "@/firebase/firestoreUtils";
+import AuthGuard from "@/app/auth/AuthGuard";
 
 interface FormData {
   open_source_title: string;
@@ -20,7 +26,7 @@ interface FormData {
   github_link: string;
 }
 
-export default function OpenSourceDetails() {
+function OpenSourceDetails() {
   const { openSourceId } = useParams();
   const router = useRouter();
   const runforms = useRef<FormikProps<FormData>>(null);
@@ -41,15 +47,20 @@ export default function OpenSourceDetails() {
           throw new Error("Invalid open sources ID");
         }
 
-        const fetchedOpenSource = await getDocumentById('open_sources', openSourceId);
+        const fetchedOpenSource = await getDocumentById(
+          "open_sources",
+          openSourceId
+        );
         if (fetchedOpenSource) {
-          setType('edit');
+          setType("edit");
           setInitialValues({
-            open_source_title: fetchedOpenSource.open_source_title as string || "",
-            icon_link: fetchedOpenSource.icon_link as string || "",
-            open_source_description: fetchedOpenSource.open_source_description as string || "",
-            web_link: fetchedOpenSource.web_link as string || "",
-            github_link: fetchedOpenSource.github_link as string || "",
+            open_source_title:
+              (fetchedOpenSource.open_source_title as string) || "",
+            icon_link: (fetchedOpenSource.icon_link as string) || "",
+            open_source_description:
+              (fetchedOpenSource.open_source_description as string) || "",
+            web_link: (fetchedOpenSource.web_link as string) || "",
+            github_link: (fetchedOpenSource.github_link as string) || "",
           });
         }
       }
@@ -86,7 +97,10 @@ export default function OpenSourceDetails() {
 
         if (formData.icon_link && formData.icon_link !== "") {
           const file = formData.icon_link as File;
-          const storageRef = ref(storage, `open_sources/${openSourceId}/${file.name}`);
+          const storageRef = ref(
+            storage,
+            `open_sources/${openSourceId}/${file.name}`
+          );
           await uploadBytes(storageRef, file);
           iconURL = await getDownloadURL(storageRef);
         }
@@ -99,22 +113,33 @@ export default function OpenSourceDetails() {
           github_link: formData.github_link || "",
         };
 
-        await updateDocument('open_sources', openSourceId, updatedData);
+        await updateDocument("open_sources", openSourceId, updatedData);
         toast.success("Open source updated successfully!");
       } else {
+        const openSourcesList = await fetchDocuments("open_sources");
+        const highestOrderNumber = openSourcesList.reduce(
+          (max, openSource) =>
+            Math.max(max, Number(openSource.order_number || 0)),
+          0
+        );
+
         const newItem = {
           open_source_title: formData.open_source_title,
           icon_link: null,
           open_source_description: formData.open_source_description,
           web_link: formData.web_link || "",
           github_link: formData.github_link || "",
+          order_number: highestOrderNumber + 1,
         };
 
-        const docRef = await addDocument('open_sources', newItem);
+        const docRef = await addDocument("open_sources", newItem);
 
         if (formData.icon_link && formData.icon_link !== "") {
           const file = formData.icon_link as File;
-          const storageRef = ref(storage, `open_sources/${docRef}/${file.name}`);
+          const storageRef = ref(
+            storage,
+            `open_sources/${docRef}/${file.name}`
+          );
           await uploadBytes(storageRef, file);
           iconURL = await getDownloadURL(storageRef);
 
@@ -131,6 +156,7 @@ export default function OpenSourceDetails() {
   };
 
   return (
+    // <AuthGuard>
     <div className="w-full mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg">
       <h1 className="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-300 capitalize">
         {type} Open Source
@@ -145,8 +171,8 @@ export default function OpenSourceDetails() {
           open_source_description: Yup.string().required(
             "Please enter description"
           ),
-          web_link: Yup.string().url('Please enter valid url'),
-          github_link: Yup.string().url('Please enter valid url'),
+          web_link: Yup.string().url("Please enter valid url"),
+          github_link: Yup.string().url("Please enter valid url"),
         })}
         onSubmit={(values) => {
           handleSubmit(values);
@@ -192,7 +218,13 @@ export default function OpenSourceDetails() {
                     <Image
                       width={100}
                       height={100}
-                      src={(typeof runform.values.icon_link !== "string") ? URL.createObjectURL(runform.values.icon_link as File) : runform.values.icon_link as string}
+                      src={
+                        typeof runform.values.icon_link !== "string"
+                          ? URL.createObjectURL(
+                              runform.values.icon_link as File
+                            )
+                          : (runform.values.icon_link as string)
+                      }
                       alt="Selected screenshot"
                       className="w-full h-32 object-cover rounded-lg shadow-lg"
                     />
@@ -262,5 +294,8 @@ export default function OpenSourceDetails() {
         )}
       </Formik>
     </div>
+    // </AuthGuard>
   );
 }
+
+export default OpenSourceDetails;

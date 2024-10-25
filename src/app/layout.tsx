@@ -10,6 +10,10 @@ import InitAos from "./components/utils/InitAos";
 import { Toaster } from "react-hot-toast";
 import { ContextProvider } from "./context/Context";
 
+interface CustomAppProps {
+  children: React.ReactNode;
+}
+
 const anekLatin = Anek_Latin({ weight: ['400', '700'], subsets: ['latin'], display: 'swap', variable: '--font-anekLatin', });
 const zain = Zain({ weight: ['400', '700', '900'], subsets: ['latin'], display: 'swap', variable: '--font-zain', });
 
@@ -21,20 +25,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: CustomAppProps) {
+
   return (
-    <ContextProvider>
-      <html lang="en" className={`${zain.variable} ${anekLatin.variable}`}>
-        <head>
-          <title>Ignite</title>
-          <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-          />
-        </head>
-        <body className="flex flex-col min-h-screen w-full text-slate-50">
+    <html lang="en" className={`${zain.variable} ${anekLatin.variable}`}>
+      <head>
+        <title>Ignite</title>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        />
+      </head>
+      <body className="flex flex-col min-h-screen w-full text-slate-50">
+        <ContextProvider>
           <InitAos />
           <Toaster position="bottom-left" />
           <div className="flex-1 master-contant">
@@ -42,8 +45,8 @@ export default function RootLayout({
           </div>
 
           <ScrollToTopButton />
-        </body>
-      </html>
-    </ContextProvider>
+        </ContextProvider>
+      </body>
+    </html>
   );
 }

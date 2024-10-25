@@ -60,9 +60,7 @@ const TalkDetails: NextPage = () => {
                             ></iframe>
                         </div>
                         <div className="details py-0 detail-section" data-aos="fade-right">
-                            <p className="p-2 text-white whitespace-pre-wrap">
-                                <div dangerouslySetInnerHTML={{ __html: talksData?.talk_description || "" }} />
-                            </p>
+                            <div className="p-2 text-white" dangerouslySetInnerHTML={{ __html: talksData?.talk_description || "" }} />
                         </div>
                     </div>
                 </div>

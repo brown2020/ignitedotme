@@ -6,8 +6,9 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { DeleteConfirmation } from "../components/DeleteConfirmation";
 import { BlogObj } from "@/app/types/models";
+import AuthGuard from "@/app/auth/AuthGuard";
 
-export default function Blog() {
+function Blog() {
   const [blogs, setBlogs] = useState<BlogObj[]>([]);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<{ show: boolean, id: string, type: string }>({ show: false, id: "", type: "" });
@@ -47,7 +48,7 @@ export default function Blog() {
   }
 
   return (
-    <>
+    // <AuthGuard>
       <div className="relative overflow-x-auto">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-300">
@@ -110,26 +111,59 @@ export default function Blog() {
                         )}
                       </td>
                       <td className="px-6 py-4">{blog.blog_title}</td>
-                      <td className="px-6 py-4 truncate max-w-3xl"><div dangerouslySetInnerHTML={{ __html: blog.blog_description }} /></td>
+                      <td className="px-6 py-4 truncate max-w-3xl">
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: blog.blog_description,
+                          }}
+                        />
+                      </td>
                       <td className="px-6 py-4 text-center">
-                        {isDeleted ?
+                        {isDeleted ? (
                           <>
-                            <span onClick={() => setShowModal({ show: true, id: blog.id, type: "restore" })} title="Restore">
+                            <span
+                              onClick={() =>
+                                setShowModal({
+                                  show: true,
+                                  id: blog.id,
+                                  type: "restore",
+                                })
+                              }
+                              title="Restore"
+                            >
                               <i className="fa-solid fa-rotate-left px-2 cursor-pointer"></i>
                             </span>
-                            <span onClick={() => setShowModal({ show: true, id: blog.id, type: "permanently_delete" })} title="Permanently delete">
-                              <i className="fa-solid fa-trash px-1 cursor-pointer"></i>
-                            </span>
-                          </> :
-                          <>
-                            <Link href={`/admin/blog/${blog.id}`}>
-                              <i className="fa-regular fa-pen-to-square px-2 cursor-pointer"></i>
-                            </Link>
-                            <span onClick={() => setShowModal({ show: true, id: blog.id, type: "delete" })}>
+                            <span
+                              onClick={() =>
+                                setShowModal({
+                                  show: true,
+                                  id: blog.id,
+                                  type: "permanently_delete",
+                                })
+                              }
+                              title="Permanently delete"
+                            >
                               <i className="fa-solid fa-trash px-1 cursor-pointer"></i>
                             </span>
                           </>
-                        }
+                        ) : (
+                          <>
+                            <Link href={`/admin/blog/${blog.id}`}>
+                              <i className="fa-regular fa-pen-to-square p-3 cursor-pointer"></i>
+                            </Link>
+                            <span
+                              onClick={() =>
+                                setShowModal({
+                                  show: true,
+                                  id: blog.id,
+                                  type: "delete",
+                                })
+                              }
+                            >
+                              <i className="fa-solid fa-trash p-3 cursor-pointer"></i>
+                            </span>
+                          </>
+                        )}
                       </td>
                     </tr>
                   );
@@ -140,9 +174,11 @@ export default function Blog() {
               )}
           </tbody>
         </table>
+        {showModal.show && <DeleteConfirmation showModal={showModal} onSubmit={handleDelete} Close={setShowModal} type={'blog'} />}
       </div>
 
-      {showModal.show && <DeleteConfirmation showModal={showModal} onSubmit={handleDelete} Close={setShowModal} type={'blog'} />}
-    </>
+    // </AuthGuard>
   );
 }
+
+export default Blog;
