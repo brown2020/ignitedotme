@@ -160,6 +160,7 @@ input {
 }
 
 @keyframes show {
+
   0%,
   49.99% {
     opacity: 0;
@@ -236,6 +237,7 @@ input {
 .table-video {
   max-width: 12rem;
 }
+
 .table-video iframe {
   width: 100%;
   height: 6rem;
@@ -244,22 +246,31 @@ input {
 .vp-center .vp-controls .ControlBar_module_progressBarAndButtons__9bc4ae6d {
   display: none;
 }
+
 .tiptap-editer .tiptap {
   background-color: transparent;
   width: 100%;
-  padding: 0.5rem 0.75rem; /* px-3 is 0.75rem, py-2 is 0.5rem */
-  color: #4a5568; /* text-gray-700 */
-  border: 1px solid #e2e8f0; /* Default Tailwind border color */
-  border-radius: 0.5rem; /* rounded-lg */
+  padding: 0.5rem 0.75rem;
+  /* px-3 is 0.75rem, py-2 is 0.5rem */
+  color: #4a5568;
+  /* text-gray-700 */
+  border: 1px solid #e2e8f0;
+  /* Default Tailwind border color */
+  border-radius: 0.5rem;
+  /* rounded-lg */
   min-height: 200px;
 }
+
 .tiptap-editer div div {
-  outline: none; /* focus:outline-none */
-  border-color: #6366f1; /* focus:border-indigo-500 */
+  outline: none;
+  /* focus:outline-none */
+  border-color: #6366f1;
+  /* focus:border-indigo-500 */
 }
 
 .dark .tiptap-editer p {
-  color: #d1d5db; /* dark:text-gray-300 */
+  color: #d1d5db;
+  /* dark:text-gray-300 */
 }
 
 @media screen and (max-width: 580px) {
@@ -290,11 +301,12 @@ input {
   }
 }
 
-.scroll-bar-design > div {
+.scroll-bar-design>div {
   width: 100%;
 }
+
 .main-admin-section {
-  height: calc(100vh - -10rem);
+  min-height: calc(100vh - 0rem);
   flex-direction: column;
 }
 
@@ -339,7 +351,7 @@ input {
 
 @media (min-width: 1881px) {
   .main-admin-section {
-    height: calc(100vh - -4rem);
+    min-height: calc(100vh - 0rem);
   }
 }
 

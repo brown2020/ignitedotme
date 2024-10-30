@@ -47,7 +47,7 @@ const BlogDetails: React.FC = () => {
                     <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 p-2 open-sources-contant">
                         <div className="w-full flex flex-col items-center justify-center" data-aos="fade-up">
                             {blogData?.blog_images && blogData?.blog_images.length > 0 &&
-                                <Image src={blogData?.blog_images[0]} alt={blogData.blog_title} width={100} height={100} />}
+                                <Image src={blogData?.blog_images[0]} alt={blogData.blog_title} width={100} height={100} className="!max-w-full w-full" />}
                         </div>
                         <div className="details py-0 detail-section" data-aos="fade-right">
                             <div className="p-2 text-white" dangerouslySetInnerHTML={{ __html: blogData?.blog_description || "" }} />

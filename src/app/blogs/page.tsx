@@ -14,7 +14,7 @@ const Blogs: React.FC = () => {
                 <div className="flex flex-col space-y-3 first-of-type:mt-5 video-grid-section bg-[#14151B] rounded-md overflow-hidden" id={blog.id} key={blog.id}>
                     <div className="apps-img mt-0">
                         {blog?.blog_images && blog?.blog_images.length > 0 &&
-                            <Image src={blog?.blog_images[0]} alt={blog.blog_title} width={100} height={100} />}
+                            <Image src={blog?.blog_images[0]} alt={blog.blog_title} width={100} height={100} className="!max-w-full w-full" />}
                     </div>
                     <div className="flex flex-col max-w-2xl px-2 my-4 text-center mx-sm-5 py-2 detail-section">
                         <div className="flex justify-between items-center">

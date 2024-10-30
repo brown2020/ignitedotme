@@ -4,6 +4,7 @@ export interface BlogObj {
     blog_title: string;
     blog_images: string[];
     blog_description: string;
+    published_on?: { seconds: number; nanoseconds: number }
 }
 
 export interface OpenSourceObj {

@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import { useParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { addDocument, fetchDocuments, getDocumentById, updateDocument } from "@/firebase/firestoreUtils";
-import AuthGuard from "@/app/auth/AuthGuard";
+import ButtonLoader from "../../components/ui/Loaders/ButtonLoader";
 
 interface FormData {
   film_title: string;
@@ -22,6 +22,7 @@ function FilmDetails() {
   const runforms = useRef<FormikProps<FormData>>(null);
 
   const [type, setType] = useState<string>("add");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [initialValues, setInitialValues] = useState({
     film_title: "",
     video_link: "",
@@ -57,6 +58,7 @@ function FilmDetails() {
   };
 
   const handleSubmit = async (formData: FormData) => {
+    setIsLoading(true);
     try {
       if (type === 'edit') {
         if (typeof filmId !== 'string') {
@@ -86,80 +88,80 @@ function FilmDetails() {
       router.push("/admin/film");
     } catch (e) {
       console.error("Error document: ", e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    // <AuthGuard>
-      <div className="w-full mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg ">
-        <h1 className="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-300 capitalize">{type} Film</h1>
-        <Formik
-          innerRef={runforms}
-          enableReinitialize
-          initialValues={initialValues}
-          validationSchema={Yup.object({
-            film_title: Yup.string().required('Please enter title'),
-            video_link: Yup.string().url('Please enter valid url').required('Please add video link'),
-            film_description: Yup.string().required('Please enter description'),
-          })}
-          onSubmit={(values) => {
-            handleSubmit(values);
-          }}
-        >
-          {(runform) => (
-            <form onSubmit={runform.handleSubmit}>
-              <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-semibold mb-2 dark:text-white">
-                  Title
-                </label>
-                <input
-                  type="text"
-                  className="bg-transparent	w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-indigo-500 dark:text-gray-300"
-                  placeholder="Enter film Title..."
-                  name="film_title"
-                  {...formAttr(runform, 'film_title')}
-                />
-                {errorContainer(runform, 'film_title')}
-              </div>
+    <div className="w-full mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg ">
+      <h1 className="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-300 capitalize">{type} Film</h1>
+      <Formik
+        innerRef={runforms}
+        enableReinitialize
+        initialValues={initialValues}
+        validationSchema={Yup.object({
+          film_title: Yup.string().required('Please enter title'),
+          video_link: Yup.string().url('Please enter valid url').required('Please add video link'),
+          film_description: Yup.string().required('Please enter description'),
+        })}
+        onSubmit={(values) => {
+          handleSubmit(values);
+        }}
+      >
+        {(runform) => (
+          <form onSubmit={runform.handleSubmit}>
+            <div className="mb-6">
+              <label className="block text-gray-700 text-sm font-semibold mb-2 dark:text-white">
+                Title
+              </label>
+              <input
+                type="text"
+                className="bg-transparent	w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-indigo-500 dark:text-gray-300"
+                placeholder="Enter film Title..."
+                name="film_title"
+                {...formAttr(runform, 'film_title')}
+              />
+              {errorContainer(runform, 'film_title')}
+            </div>
 
-              <div className="mb-6">
-                <label
-                  className="block text-gray-700 text-sm font-semibold mb-2 dark:text-white"
-                  htmlFor="video"
-                >
-                  Add Video Link
-                </label>
-                <input
-                  type="url"
-                  className="bg-transparent w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-indigo-500 dark:text-gray-300"
-                  placeholder="Enter Video URL..."
-                  name="video_link"
-                  {...formAttr(runform, 'video_link')}
-                />
-                {errorContainer(runform, 'video_link')}
-              </div>
+            <div className="mb-6">
+              <label
+                className="block text-gray-700 text-sm font-semibold mb-2 dark:text-white"
+                htmlFor="video"
+              >
+                Add Video Link
+              </label>
+              <input
+                type="url"
+                className="bg-transparent w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-indigo-500 dark:text-gray-300"
+                placeholder="Enter Video URL..."
+                name="video_link"
+                {...formAttr(runform, 'video_link')}
+              />
+              {errorContainer(runform, 'video_link')}
+            </div>
 
-              <div className="mb-6">
-                <label
-                  className="block text-gray-700 text-sm font-semibold mb-2 dark:text-white"
-                  htmlFor="description"
-                >
-                  Description
-                </label>
-                <TipTapEditor getEditorContent={handleEditorContent} content={initialValues.film_description} />
-                {errorContainer(runform, 'film_description')}
-              </div>
+            <div className="mb-6">
+              <label
+                className="block text-gray-700 text-sm font-semibold mb-2 dark:text-white"
+                htmlFor="description"
+              >
+                Description
+              </label>
+              <TipTapEditor getEditorContent={handleEditorContent} content={initialValues.film_description} />
+              {errorContainer(runform, 'film_description')}
+            </div>
 
-              <div className="text-right">
-                <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all" type="submit">
-                  Save
-                </button>
-              </div>
-            </form>
-          )}
-        </Formik>
-      </div>
-    // </AuthGuard>
+            <div className="text-right">
+              <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all" type="submit">
+                {isLoading ? <ButtonLoader /> : 'Save'}
+              </button>
+            </div>
+          </form>
+        )}
+      </Formik>
+    </div>
   );
 }
 

@@ -5,12 +5,13 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { DeleteConfirmation } from "../components/DeleteConfirmation";
 import { FilmObj } from "@/app/types/models";
-import AuthGuard from "@/app/auth/AuthGuard";
 import DataTable, { Column } from "../components/DataTable";
+import Loader from "../components/ui/Loaders/Loader";
 
 function Film() {
   const [films, setFilms] = useState<FilmObj[]>([]);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<{ show: boolean, id: string, type: string }>({ show: false, id: "", type: "" });
 
   const columns: Column<FilmObj>[] = [
@@ -43,7 +44,7 @@ function Film() {
       options: {
         customBodyRender: (data: FilmObj) => {
           return (
-            <div className="truncate max-w-3xl" dangerouslySetInnerHTML={{ __html: data.film_description }} />
+            <div className="max-w-3xl" dangerouslySetInnerHTML={{ __html: `${data.film_description?.length > 500 ? data.film_description?.slice(0, 500) : data.film_description}...` }} />
           )
         }
       }
@@ -89,18 +90,25 @@ function Film() {
   }, []);
 
   const fetchFilms = async () => {
-    const filmsList = await fetchDocuments('films', { sort_by: 'order_number', order: 'asc' });
+    try {
+      const filmsList = await fetchDocuments('films', { sort_by: 'order_number', order: 'asc' });
 
-    const mappedFilms = filmsList.map((film, i) => ({
-      id: film.id,
-      is_deleted: film.is_deleted || false,
-      film_title: film.film_title,
-      film_description: film.film_description,
-      video_link: film.video_link,
-      order_number: film.order_number || (i + 1)
-    }));
+      const mappedFilms = filmsList.map((film, i) => ({
+        id: film.id,
+        is_deleted: film.is_deleted || false,
+        film_title: film.film_title,
+        film_description: film.film_description,
+        video_link: film.video_link,
+        order_number: film.order_number || (i + 1)
+      }));
 
-    setFilms(mappedFilms as FilmObj[]);
+      setFilms(mappedFilms as FilmObj[]);
+    } catch (error) {
+      console.error("Error fetching films:", error);
+      toast.error("Failed to fetch films. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleDelete = async () => {
@@ -145,7 +153,6 @@ function Film() {
   };
 
   return (
-    // ><AuthGuard
     <>
       <div className="relative overflow-x-auto">
         <div className="flex justify-between items-center mb-4">
@@ -153,7 +160,7 @@ function Film() {
             Films
           </h1>
           <div>
-            <button className={`${isDeleted ? 'bg-[#e76259]' : 'border border-[#e76259]'} hover:bg-[#e76259] text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all`} onClick={() => setIsDeleted(!isDeleted)}>
+            <button className={`${isDeleted ? 'bg-[#e76259]' : 'border border-[#e76259]'} hover:bg-[#e76259] hover:text-white text-gray-900 dark:text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all`} onClick={() => setIsDeleted(!isDeleted)}>
               Deleted Films
             </button>
             <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all ms-3">
@@ -164,12 +171,17 @@ function Film() {
           </div>
         </div>
 
-        <DataTable columns={columns} data={films?.filter((f) => isDeleted ? f.is_deleted : !f.is_deleted)} options={{ isDragDropRow: true, field_name: 'order_number' }} onRowDrop={handleRowDrop} />
+        {
+          isLoading ? (
+            <Loader />
+          ) : (
+            <DataTable columns={columns} data={films?.filter((f) => isDeleted ? f.is_deleted : !f.is_deleted)} options={{ isDragDropRow: true, field_name: 'order_number' }} onRowDrop={handleRowDrop} />
+          )}
+
       </div>
 
       {showModal.show && <DeleteConfirmation showModal={showModal} onSubmit={handleDelete} Close={setShowModal} type={'film'} />}
     </>
-    // </AuthGuard>
   );
 }
 

@@ -5,14 +5,17 @@ import { NextPage } from "next";
 import React, { useEffect } from "react";
 import { auth, db } from "../../../firebase/firebase";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { Context } from "@/app/context/Context";
+import { useRouter } from "next/navigation";
+import Cookies from 'js-cookie';
+import { checkAdminStatus } from "../../lib/utils/checkAdminStatus";
+import { getDocumentById } from "@/firebase/firestoreUtils";
 
 const Signup: NextPage = () => {
-  const router = useRouter();
   const provider = new GoogleAuthProvider();
   const { userLogin } = Context();
+  const router = useRouter();
 
   useEffect(() => {
     const signUpButton = document.getElementById("signUp");
@@ -28,16 +31,25 @@ const Signup: NextPage = () => {
     });
 
     return () => {
-      signUpButton?.removeEventListener("click", () => {});
-      signInButton?.removeEventListener("click", () => {});
+      signUpButton?.removeEventListener("click", () => { });
+      signInButton?.removeEventListener("click", () => { });
     };
   }, []);
 
   const googleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
-      userLogin(result.user);
-      await saveUserToFirestore(result.user);
+      const token = await result.user.getIdToken();
+      const isAdmin = await checkAdminStatus(token);
+      if (isAdmin) {
+
+        Cookies.set('authToken', token);
+        const userDoc = await getDocumentById("users", result.user.uid);
+        userLogin(userDoc);
+        await saveUserToFirestore(result.user);
+      } else {
+        Cookies.remove('authToken');
+      }
     } catch (error) {
       console.error("Sign-in error:", error);
       toast.error("Sign-in failed. Please try again.");
@@ -65,7 +77,7 @@ const Signup: NextPage = () => {
         toast.success("User Logged in successully");
       }
 
-      // router.push("/admin");
+      router.push('/admin/film')
     } catch (error) {
       console.log("Error adding user to Firestore:", error);
       toast.error("Error adding user to Firestore.");

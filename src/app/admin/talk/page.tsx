@@ -9,12 +9,13 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { DeleteConfirmation } from "../components/DeleteConfirmation";
 import { TalkObj } from "@/app/types/models";
-import AuthGuard from "@/app/auth/AuthGuard";
 import DataTable, { Column } from "../components/DataTable";
+import Loader from "../components/ui/Loaders/Loader";
 
 function Talk() {
   const [talks, setTalks] = useState<TalkObj[]>([]);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<{
     show: boolean;
     id: string;
@@ -49,8 +50,8 @@ function Talk() {
         customBodyRender: (data: TalkObj) => {
           return (
             <div
-              className="truncate max-w-3xl"
-              dangerouslySetInnerHTML={{ __html: data.talk_description }}
+              className="max-w-3xl"
+              dangerouslySetInnerHTML={{ __html: `${data.talk_description?.length > 500 ? data.talk_description?.slice(0, 500) : data.talk_description}...` }}
             />
           );
         },
@@ -112,21 +113,28 @@ function Talk() {
   }, []);
 
   const fetchTalks = async () => {
-    const talksList = await fetchDocuments("talks", {
-      sort_by: "order_number",
-      order: "asc",
-    });
+    try {
+      const talksList = await fetchDocuments("talks", {
+        sort_by: "order_number",
+        order: "asc",
+      });
 
-    const mappedTalks = talksList.map((talk, i) => ({
-      id: talk.id,
-      is_deleted: talk.is_deleted || false,
-      talk_title: talk.talk_title,
-      talk_description: talk.talk_description,
-      video_link: talk.video_link,
-      order_number: talk.order_number || i + 1,
-    }));
+      const mappedTalks = talksList.map((talk, i) => ({
+        id: talk.id,
+        is_deleted: talk.is_deleted || false,
+        talk_title: talk.talk_title,
+        talk_description: talk.talk_description,
+        video_link: talk.video_link,
+        order_number: talk.order_number || i + 1,
+      }));
 
-    setTalks(mappedTalks as TalkObj[]);
+      setTalks(mappedTalks as TalkObj[]);
+    } catch (error) {
+      console.error("Error fetching talks:", error);
+      toast.error("Failed to fetch talks. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleDelete = async () => {
@@ -178,9 +186,8 @@ function Talk() {
         </h1>
         <div>
           <button
-            className={`${
-              isDeleted ? "bg-[#e76259]" : "border border-[#e76259]"
-            } hover:bg-[#e76259] text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all`}
+            className={`${isDeleted ? "bg-[#e76259]" : "border border-[#e76259]"
+              } hover:bg-[#e76259] hover:text-white text-gray-900 dark:text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all`}
             onClick={() => setIsDeleted(!isDeleted)}
           >
             Deleted Talks
@@ -191,12 +198,17 @@ function Talk() {
         </div>
       </div>
 
-      <DataTable
-        columns={columns}
-        data={talks?.filter((f) => (isDeleted ? f.is_deleted : !f.is_deleted))}
-        options={{ isDragDropRow: true, field_name: "order_number" }}
-        onRowDrop={handleRowDrop}
-      />
+      {
+        isLoading ? (
+          <Loader />
+        ) : (
+          <DataTable
+            columns={columns}
+            data={talks?.filter((f) => (isDeleted ? f.is_deleted : !f.is_deleted))}
+            options={{ isDragDropRow: true, field_name: "order_number" }}
+            onRowDrop={handleRowDrop}
+          />
+        )}
       {showModal.show && (
         <DeleteConfirmation
           showModal={showModal}

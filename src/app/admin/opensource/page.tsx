@@ -7,10 +7,12 @@ import toast from "react-hot-toast";
 import { DeleteConfirmation } from "../components/DeleteConfirmation";
 import { OpenSourceObj } from "@/app/types/models";
 import DataTable, { Column } from "../components/DataTable";
+import Loader from "../components/ui/Loaders/Loader";
 
 function OpenSource() {
   const [openSources, setOpenSources] = useState<OpenSourceObj[]>([]);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<{ show: boolean, id: string, type: string }>({ show: false, id: "", type: "" });
 
   const columns: Column<OpenSourceObj>[] = [
@@ -38,7 +40,7 @@ function OpenSource() {
       options: {
         customBodyRender: (data: OpenSourceObj) => {
           return (
-            <div className="truncate max-w-3xl" dangerouslySetInnerHTML={{ __html: data.open_source_description }} />
+            <div className="max-w-3xl" dangerouslySetInnerHTML={{ __html: `${data.open_source_description?.length > 500 ? data.open_source_description?.slice(0, 500) : data.open_source_description}...` }} />
           )
         }
       }
@@ -80,20 +82,27 @@ function OpenSource() {
   }, []);
 
   const fetchOpenSources = async () => {
-    const openSourcesList = await fetchDocuments('open_sources', { sort_by: 'order_number', order: 'asc' });
+    try {
+      const openSourcesList = await fetchDocuments('open_sources', { sort_by: 'order_number', order: 'asc' });
 
-    const mappedOpenSources = openSourcesList.map((openSource, i) => ({
-      id: openSource.id,
-      is_deleted: openSource.is_deleted || false,
-      open_source_title: openSource.open_source_title,
-      icon_link: openSource.icon_link,
-      open_source_description: openSource.open_source_description,
-      web_link: openSource.web_link || "",
-      github_link: openSource.github_link || "",
-      order_number: openSource.order_number || (i + 1)
-    }));
+      const mappedOpenSources = openSourcesList.map((openSource, i) => ({
+        id: openSource.id,
+        is_deleted: openSource.is_deleted || false,
+        open_source_title: openSource.open_source_title,
+        icon_link: openSource.icon_link,
+        open_source_description: openSource.open_source_description,
+        web_link: openSource.web_link || "",
+        github_link: openSource.github_link || "",
+        order_number: openSource.order_number || (i + 1)
+      }));
 
-    setOpenSources(mappedOpenSources as OpenSourceObj[]);
+      setOpenSources(mappedOpenSources as OpenSourceObj[]);
+    } catch (error) {
+      console.error("Error fetching open sources:", error);
+      toast.error("Failed to fetch open sources. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleDelete = async () => {
@@ -139,29 +148,31 @@ function OpenSource() {
   };
 
   return (
-    // <AuthGuard>
-      <div className="relative overflow-x-auto">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-300">
-            Open Source
-          </h1>
-          <div>
-            <button className={`${isDeleted ? 'bg-[#e76259]' : 'border border-[#e76259]'} hover:bg-[#e76259] text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all`} onClick={() => setIsDeleted(!isDeleted)}>
-              Deleted Open Sources
-            </button>
-            <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all ms-3">
-              <Link href="/admin/opensource/add">
-                Add Open Source
-              </Link>
-            </button>
-          </div>
+    <div className="relative overflow-x-auto">
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-300">
+          Open Source
+        </h1>
+        <div>
+          <button className={`${isDeleted ? 'bg-[#e76259]' : 'border border-[#e76259]'} hover:bg-[#e76259] hover:text-white text-gray-900 dark:text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all`} onClick={() => setIsDeleted(!isDeleted)}>
+            Deleted Open Sources
+          </button>
+          <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all ms-3">
+            <Link href="/admin/opensource/add">
+              Add Open Source
+            </Link>
+          </button>
         </div>
-
-        <DataTable columns={columns} data={openSources?.filter((f) => isDeleted ? f.is_deleted : !f.is_deleted)} options={{ isDragDropRow: true, field_name: 'order_number' }} onRowDrop={handleRowDrop} />
-          {showModal.show && <DeleteConfirmation showModal={showModal} onSubmit={handleDelete} Close={setShowModal} type={'open source'} />}
       </div>
 
-    // </AuthGuard>
+      {
+        isLoading ? (
+          <Loader />
+        ) : (
+          <DataTable columns={columns} data={openSources?.filter((f) => isDeleted ? f.is_deleted : !f.is_deleted)} options={{ isDragDropRow: true, field_name: 'order_number' }} onRowDrop={handleRowDrop} />
+        )}
+      {showModal.show && <DeleteConfirmation showModal={showModal} onSubmit={handleDelete} Close={setShowModal} type={'open source'} />}
+    </div>
   );
 }
 

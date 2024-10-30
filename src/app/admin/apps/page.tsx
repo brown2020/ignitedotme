@@ -12,10 +12,12 @@ import toast from "react-hot-toast";
 import { DeleteConfirmation } from "../components/DeleteConfirmation";
 import { AppObj } from "@/app/types/models";
 import DataTable, { Column } from "../components/DataTable";
+import Loader from "../components/ui/Loaders/Loader";
 
 function Apps() {
   const [apps, setApps] = useState<AppObj[]>([]);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<{
     show: boolean;
     id: string;
@@ -55,8 +57,8 @@ function Apps() {
         customBodyRender: (data: AppObj) => {
           return (
             <div
-              className="truncate max-w-3xl"
-              dangerouslySetInnerHTML={{ __html: data.app_description }}
+              className="max-w-3xl"
+              dangerouslySetInnerHTML={{ __html: `${data.app_description?.length > 500 ? data.app_description?.slice(0, 500) : data.app_description}...` }}
             />
           );
         },
@@ -118,24 +120,31 @@ function Apps() {
   }, []);
 
   const fetchApps = async () => {
-    const appsList = await fetchDocuments("apps", {
-      sort_by: "order_number",
-      order: "asc",
-    });
+    try {
+      const appsList = await fetchDocuments("apps", {
+        sort_by: "order_number",
+        order: "asc",
+      });
 
-    const mappedApps = appsList.map((app, i) => ({
-      id: app.id,
-      is_deleted: app.is_deleted || false,
-      app_title: app.app_title || "",
-      screenshots: (app.screenshots as string[]) || [],
-      app_description: app.app_description || "",
-      web_link: app.web_link || "",
-      ios_app_link: app.ios_app_link || "",
-      android_app_link: app.android_app_link || "",
-      order_number: app.order_number || i + 1,
-    }));
+      const mappedApps = appsList.map((app, i) => ({
+        id: app.id,
+        is_deleted: app.is_deleted || false,
+        app_title: app.app_title || "",
+        screenshots: (app.screenshots as string[]) || [],
+        app_description: app.app_description || "",
+        web_link: app.web_link || "",
+        ios_app_link: app.ios_app_link || "",
+        android_app_link: app.android_app_link || "",
+        order_number: app.order_number || i + 1,
+      }));
 
-    setApps(mappedApps as AppObj[]);
+      setApps(mappedApps as AppObj[]);
+    } catch (error) {
+      console.error("Error fetching apps:", error);
+      toast.error("Failed to fetch apps. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleDelete = async () => {
@@ -192,9 +201,8 @@ function Apps() {
           </h1>
           <div>
             <button
-              className={`${
-                isDeleted ? "bg-[#e76259]" : "border border-[#e76259]"
-              } hover:bg-[#e76259] text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all`}
+              className={`${isDeleted ? "bg-[#e76259]" : "border border-[#e76259]"
+                } hover:bg-[#e76259] hover:text-white text-gray-900 dark:text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all`}
               onClick={() => setIsDeleted(!isDeleted)}
             >
               Deleted Apps
@@ -205,12 +213,17 @@ function Apps() {
           </div>
         </div>
 
-        <DataTable
-          columns={columns}
-          data={apps?.filter((f) => (isDeleted ? f.is_deleted : !f.is_deleted))}
-          options={{ isDragDropRow: true, field_name: "order_number" }}
-          onRowDrop={handleRowDrop}
-        />
+        {
+          isLoading ? (
+            <Loader />
+          ) : (
+            <DataTable
+              columns={columns}
+              data={apps?.filter((f) => (isDeleted ? f.is_deleted : !f.is_deleted))}
+              options={{ isDragDropRow: true, field_name: "order_number" }}
+              onRowDrop={handleRowDrop}
+            />
+          )}
       </div>
 
       {showModal.show && (

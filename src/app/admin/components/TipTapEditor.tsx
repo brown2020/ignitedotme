@@ -55,7 +55,7 @@ const TipTapEditor: React.FC<TipTapEditorProps> = ({ getEditorContent, content }
       <div ref={menuContainerRef} className="grow overflow-y-auto scroll-bar-design border border-gray-200 rounded-md shadow-md">
         <EditorContent
           editor={editor}
-          className="h-full relative prose prose-sm max-w-none [&>div]:h-full"
+          className="h-full relative prose prose-sm max-w-none [&>div]:h-full text-[#000] dark:text-white"
         />
       </div>
     </Fragment>

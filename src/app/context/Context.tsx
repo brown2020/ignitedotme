@@ -20,6 +20,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "@/firebase/firebase";
 import { DocumentData } from "firebase/firestore";
+import Cookies from 'js-cookie';
 
 interface PageProps {
   films: FilmObj[];
@@ -54,19 +55,20 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       try {
+
         if (currentUser) {
           const userDoc = await getDocumentById("users", currentUser.uid);
           if (userDoc) {
-            userLogin(userDoc);
+            setUser(userDoc);
           } else {
-            userLogin(null);
+            setUser(null);
           }
         } else {
-          userLogin(null);
+          setUser(null);
         }
       } catch (error) {
-          console.log(error, "error");
-          userLogin(null);
+        console.log(error, "error");
+        setUser(null);
       }
     });
 
@@ -75,7 +77,10 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({
 
   const fetchAllData = useCallback(async () => {
     const fetchBlogs = async () => {
-      const blogsList = await fetchDocuments("blogs");
+      const blogsList = await fetchDocuments("blogs", {
+        sort_by: "published_on",
+        order: "desc",
+      });
 
       const mappedBlogs = blogsList.map((blog) => ({
         id: blog.id,
@@ -188,12 +193,15 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({
 
   const userLogin = (userData: DocumentData | null) => {
     setUser(userData);
+    if (!userData) {
+      Cookies.remove('authToken');
+    }
   };
 
   const userLogout = async () => {
     try {
       await signOut(auth);
-
+      Cookies.remove('authToken');
       setUser(null);
       router.push("/admin/signup");
     } catch (error) {

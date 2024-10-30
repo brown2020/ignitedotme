@@ -16,7 +16,7 @@ import {
   getDocumentById,
   updateDocument,
 } from "@/firebase/firestoreUtils";
-import AuthGuard from "@/app/auth/AuthGuard";
+import ButtonLoader from "../../components/ui/Loaders/ButtonLoader";
 
 interface FormData {
   open_source_title: string;
@@ -32,6 +32,7 @@ function OpenSourceDetails() {
   const runforms = useRef<FormikProps<FormData>>(null);
 
   const [type, setType] = useState<string>("add");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [initialValues, setInitialValues] = useState({
     open_source_title: "",
     icon_link: "",
@@ -87,6 +88,7 @@ function OpenSourceDetails() {
   };
 
   const handleSubmit = async (formData: FormData) => {
+    setIsLoading(true);
     try {
       let iconURL = null;
 
@@ -152,11 +154,12 @@ function OpenSourceDetails() {
     } catch (e) {
       console.error("Error saving document: ", e);
       toast.error("Failed to save document.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    // <AuthGuard>
     <div className="w-full mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg">
       <h1 className="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-300 capitalize">
         {type} Open Source
@@ -221,8 +224,8 @@ function OpenSourceDetails() {
                       src={
                         typeof runform.values.icon_link !== "string"
                           ? URL.createObjectURL(
-                              runform.values.icon_link as File
-                            )
+                            runform.values.icon_link as File
+                          )
                           : (runform.values.icon_link as string)
                       }
                       alt="Selected screenshot"
@@ -287,14 +290,13 @@ function OpenSourceDetails() {
                 className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all"
                 type="submit"
               >
-                Save
+                {isLoading ? <ButtonLoader /> : 'Save'}
               </button>
             </div>
           </form>
         )}
       </Formik>
     </div>
-    // </AuthGuard>
   );
 }
 
