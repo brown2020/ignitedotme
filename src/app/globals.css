@@ -2,300 +2,301 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import a reliable display font that can substitute for Zain */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap");
+
 .navlink {
-    @apply hover:scale-110 opacity-50 hover:opacity-100 cursor-pointer;
+  @apply hover:scale-110 opacity-50 hover:opacity-100 cursor-pointer;
 }
 
 .activelink {
-    @apply opacity-100 cursor-default;
+  @apply opacity-100 cursor-default;
 }
 
 h1 {
-    @apply text-5xl;
+  @apply text-5xl;
 }
 
 h2 {
-    @apply text-2xl;
+  @apply text-2xl;
 }
 
 h3 {
-    @apply text-xl;
+  @apply text-xl;
 }
 
 h5 {
-    @apply text-lg;
+  @apply text-lg;
 }
 
 ul {
-    @apply space-y-2 px-3;
+  @apply space-y-2 px-3;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Marcellus&display=swap");
 
 .videoWrapper {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
 }
 
 .videoWrapper iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-    font-family: 'Anek Latin' !important;
+  font-family: var(--font-anek-latin), "Anek Latin", sans-serif !important;
 }
 
 h1,
 h2 {
-    font-family: 'Zain';
-    font-weight: 900;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 900;
 }
 
 h2 {
-    font-size: 30px;
-    color: #F5A425;
+  font-size: 30px;
+  color: #f5a425;
 }
 
 h5,
 p {
-    font-family: 'Anek Latin';
-    font-size: 20px;
+  font-family: var(--font-anek-latin), "Anek Latin", sans-serif;
+  font-size: 20px;
 }
 
 input {
-    font-family: 'Anek Latin';
+  font-family: var(--font-anek-latin), "Anek Latin", sans-serif;
 }
 
 #return-to-top {
-    display: none;
-    position: fixed;
-    bottom: 2.5rem;
-    right: 2rem;
-    z-index: 99;
-    border: none;
-    outline: none;
-    background-color: #0d6285;
-    color: white;
-    cursor: pointer;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    text-transform: capitalize;
+  display: none;
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: #0d6285;
+  color: white;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  text-transform: capitalize;
 }
 
 #return-to-top:hover {
-    background-color: #555;
+  background-color: #555;
 }
 
 #return-to-top svg {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .footer_bg_img {
-    position: relative;
+  position: relative;
 }
 
 .footer_bg_img::before {
-    position: absolute;
-    content: '';
-    inset: 0;
-    background: #020205;
-    opacity: 0.7;
-    z-index: 0;
+  position: absolute;
+  content: "";
+  inset: 0;
+  background: #020205;
+  opacity: 0.7;
+  z-index: 0;
 }
 
 .hero_title {
-    color: #F5A425;
-    font-size: 12rem;
+  color: #f5a425;
+  font-size: 12rem;
 }
 
 .hero_details {
-    font-size: 2.4rem;
+  font-size: 2.4rem;
 }
 
 /*================= admin css =========*/
 .admin-section {
-    height: calc(100vh - 10rem);
+  height: calc(100vh - 10rem);
 }
 
 .containerr input {
-    background-color: rgba(250, 250, 250, 0.3);
-    border: 1px solid transparent;
-    border-radius: 10px;
-    padding: 8px 20px;
-    margin: 10px 0px;
-    width: 100%;
-    outline: 0;
+  background-color: rgba(250, 250, 250, 0.3);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 8px 20px;
+  margin: 10px 0px;
+  width: 100%;
+  outline: 0;
 }
 
 .containerr input:focus {
-    border: 1px solid #F5A425;
-    background-color: rgba(250, 250, 250, 0.3);
-    outline: 0;
+  border: 1px solid #f5a425;
+  background-color: rgba(250, 250, 250, 0.3);
+  outline: 0;
 }
 
 .containerr {
-    /* background-color: #fff; */
-    border-radius: 10px;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
-        0 10px 10px rgba(0, 0, 0, 0.22);
-    position: relative;
-    overflow: hidden;
-    width: 55rem;
-    max-width: 100%;
-    min-height: 33rem;
+  /* background-color: #fff; */
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  position: relative;
+  overflow: hidden;
+  width: 55rem;
+  max-width: 100%;
+  min-height: 33rem;
 }
 
 .form-container {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    transition: all 0.6s ease-in-out;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
 }
 
 .sign-in-container {
-    left: 0;
-    width: 50%;
-    z-index: 2;
+  left: 0;
+  width: 50%;
+  z-index: 2;
 }
 
 .containerr.right-panel-active .sign-in-container {
-    opacity: 0;
-    transform: translateX(100%);
+  opacity: 0;
+  transform: translateX(100%);
 }
 
 .sign-up-container {
-    left: 0;
-    width: 50%;
-    opacity: 0;
-    z-index: 1;
+  left: 0;
+  width: 50%;
+  opacity: 0;
+  z-index: 1;
 }
 
 .containerr.right-panel-active .sign-up-container {
-    transform: translateX(100%);
-    opacity: 1;
-    z-index: 5;
-    animation: show 0.6s;
+  transform: translateX(100%);
+  opacity: 1;
+  z-index: 5;
+  animation: show 0.6s;
 }
 
 @keyframes show {
+  0%,
+  49.99% {
+    opacity: 0;
+    z-index: 1;
+  }
 
-    0%,
-    49.99% {
-        opacity: 0;
-        z-index: 1;
-    }
-
-    50%,
-    100% {
-        opacity: 1;
-        z-index: 5;
-    }
+  50%,
+  100% {
+    opacity: 1;
+    z-index: 5;
+  }
 }
 
 .overlay-container {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 50%;
-    height: 100%;
-    overflow: hidden;
-    transition: transform 0.6s ease-in-out;
-    z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.6s ease-in-out;
+  z-index: 100;
 }
 
 .containerr.right-panel-active .overlay-container {
-    transform: translateX(-100%);
+  transform: translateX(-100%);
 }
 
 .overlay {
-    background: #086583;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 0 0;
-    color: #FFFFFF;
-    position: relative;
-    left: -100%;
-    height: 100%;
-    width: 200%;
-    transform: translateX(0);
-    transition: transform 0.6s ease-in-out;
+  background: #086583;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 0;
+  color: #ffffff;
+  position: relative;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
 }
 
 .containerr.right-panel-active .overlay {
-    transform: translateX(50%);
+  transform: translateX(50%);
 }
 
 .overlay-panel {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 40px;
-    text-align: center;
-    top: 0;
-    height: 100%;
-    width: 50%;
-    transform: translateX(0);
-    transition: transform 0.6s ease-in-out;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 40px;
+  text-align: center;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
 }
 
 .overlay-left {
-    transform: translateX(-20%);
+  transform: translateX(-20%);
 }
 
 .containerr.right-panel-active .overlay-left {
-    transform: translateX(0);
+  transform: translateX(0);
 }
 
 .overlay-right {
-    right: 0;
-    transform: translateX(0);
+  right: 0;
+  transform: translateX(0);
 }
 
 .containerr.right-panel-active .overlay-right {
-    transform: translateX(20%);
+  transform: translateX(20%);
 }
 
 .social-container {
-    margin: 20px 0;
+  margin: 20px 0;
 }
 
 .social-container a {
-    border: 1px solid #DDDDDD;
-    border-radius: 50%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 5px;
-    height: 40px;
-    width: 40px;
+  border: 1px solid #dddddd;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+  height: 40px;
+  width: 40px;
 }
 
 @media screen and (max-width: 580px) {
-    .hero_title {
-        font-size: 3.5rem;
-    }
+  .hero_title {
+    font-size: 3.5rem;
+  }
 
-    .hero_details {
-        font-size: 1.5rem;
-        max-width: 65%;
-        margin: auto;
-    }
+  .hero_details {
+    font-size: 1.5rem;
+    max-width: 65%;
+    margin: auto;
+  }
 }
 
 body {
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
