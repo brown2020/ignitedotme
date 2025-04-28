@@ -249,7 +249,7 @@ export default function Home() {
               </p>
             </div>
             <div
-              className="sigup-form backdrop-blur-sm flex flex-col items-center justify-center h-full max-w-7xl	px-6 py-10 rounded-lg text-center z-10 mx-auto shadow-2xl"
+              className="sigup-form backdrop-blur-xs flex flex-col items-center justify-center h-full max-w-7xl	px-6 py-10 rounded-lg text-center z-10 mx-auto shadow-2xl"
               data-aos="fade-left"
             >
               <form className="w-full space-y-6" onSubmit={handleSubmit}>

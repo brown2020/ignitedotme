@@ -1,39 +1,64 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 /* Import a reliable display font that can substitute for Zain */
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap')
+layer(utilities);
 
-.navlink {
-  @apply hover:scale-110 opacity-50 hover:opacity-100 cursor-pointer;
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap')
+layer(utilities);
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
 }
 
-.activelink {
-  @apply opacity-100 cursor-default;
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
 }
 
-h1 {
-  @apply text-5xl;
-}
+@layer utilities {
+  .navlink {
+    @apply hover:scale-110 opacity-50 hover:opacity-100 cursor-pointer;
+  }
 
-h2 {
-  @apply text-2xl;
-}
+  .activelink {
+    @apply opacity-100 cursor-default;
+  }
 
-h3 {
-  @apply text-xl;
-}
+  h1 {
+    @apply text-5xl;
+  }
 
-h5 {
-  @apply text-lg;
-}
+  h2 {
+    @apply text-2xl;
+  }
 
-ul {
-  @apply space-y-2 px-3;
-}
+  h3 {
+    @apply text-xl;
+  }
 
-@import url("https://fonts.googleapis.com/css2?family=Marcellus&display=swap");
+  h5 {
+    @apply text-lg;
+  }
+
+  ul {
+    @apply space-y-2 px-3;
+  }
+}
 
 .videoWrapper {
   position: relative;
